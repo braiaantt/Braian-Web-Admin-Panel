@@ -63,7 +63,7 @@ color: #fff;
     <item>
      <widget class="QStackedWidget" name="stackedWidgetPages">
       <property name="currentIndex">
-       <number>2</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="loginPage">
        <layout class="QVBoxLayout" name="verticalLayout_2">
