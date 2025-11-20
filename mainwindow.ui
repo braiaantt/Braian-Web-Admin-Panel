@@ -6,15 +6,48 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1150</width>
-    <height>793</height>
+    <width>999</width>
+    <height>892</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">QWidget{
+background-color: #112;
+}
+
+QStackedWidget{
+background-color: transparent;
+}
+
+QScrollArea{
+border: none;
+}
+
+QLabel{
+color: #fff;
+}
+
+QPushButton{
+background-color: #223;
+color: #fff;
+}
+
+QLineEdit, QPlainTextEdit{
+border: 1px solid #888;
+color: #fff;
+}</string>
+  </property>
   <widget class="QWidget" name="centralwidget">
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
    <layout class="QVBoxLayout" name="verticalLayout">
+    <property name="spacing">
+     <number>0</number>
+    </property>
     <property name="leftMargin">
      <number>0</number>
     </property>
@@ -28,92 +61,51 @@
      <number>0</number>
     </property>
     <item>
-     <widget class="QStackedWidget" name="stackedWidget">
+     <widget class="QStackedWidget" name="stackedWidgetPages">
       <property name="currentIndex">
-       <number>0</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="loginPage">
        <layout class="QVBoxLayout" name="verticalLayout_2">
-        <item>
-         <spacer name="verticalSpacer">
-          <property name="orientation">
-           <enum>Qt::Orientation::Vertical</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>298</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item alignment="Qt::AlignmentFlag::AlignHCenter">
-         <widget class="QLabel" name="label">
-          <property name="font">
-           <font>
-            <pointsize>26</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>Iniciar Sesion</string>
-          </property>
-         </widget>
-        </item>
-        <item alignment="Qt::AlignmentFlag::AlignHCenter">
-         <widget class="QLineEdit" name="lineEditEmail">
-          <property name="minimumSize">
-           <size>
-            <width>180</width>
-            <height>30</height>
-           </size>
-          </property>
-          <property name="placeholderText">
-           <string>email</string>
-          </property>
-         </widget>
-        </item>
-        <item alignment="Qt::AlignmentFlag::AlignHCenter">
-         <widget class="QLineEdit" name="lineEditPassword">
-          <property name="minimumSize">
-           <size>
-            <width>180</width>
-            <height>30</height>
-           </size>
-          </property>
-          <property name="placeholderText">
-           <string>contraseña</string>
-          </property>
-         </widget>
-        </item>
-        <item alignment="Qt::AlignmentFlag::AlignHCenter">
-         <widget class="QPushButton" name="pushButton">
-          <property name="minimumSize">
-           <size>
-            <width>180</width>
-            <height>30</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>Enviar</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <spacer name="verticalSpacer_2">
-          <property name="orientation">
-           <enum>Qt::Orientation::Vertical</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>297</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
+        <property name="spacing">
+         <number>6</number>
+        </property>
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
        </layout>
       </widget>
-      <widget class="QWidget" name="mainContentPage"/>
+      <widget class="QWidget" name="portfolioPage">
+       <layout class="QVBoxLayout" name="verticalLayout_9">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="projectPage">
+       <layout class="QVBoxLayout" name="verticalLayout_3"/>
+      </widget>
      </widget>
     </item>
    </layout>
