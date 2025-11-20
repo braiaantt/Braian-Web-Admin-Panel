@@ -27,6 +27,12 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         #------ Pages ------
         portfoliopage.h portfoliopage.cpp portfoliopage.ui
         loginpage.h loginpage.cpp loginpage.ui
+
+        #------ Custome Widgets ------
+        custome_widgets/portfolioproject.h custome_widgets/portfolioproject.cpp custome_widgets/portfolioproject.ui
+
+        #------ Resources ------
+        images.qrc
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET web_admin_panel APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
