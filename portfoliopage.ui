@@ -10,6 +10,12 @@
     <height>933</height>
    </rect>
   </property>
+  <property name="minimumSize">
+   <size>
+    <width>0</width>
+    <height>0</height>
+   </size>
+  </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
@@ -81,7 +87,7 @@ color: #fff;
        <number>0</number>
       </property>
       <item>
-       <widget class="QLabel" name="labelPersonalInformationTxt">
+       <widget class="QLabel" name="labelPersonalInformationTitle">
         <property name="font">
          <font>
           <pointsize>26</pointsize>
@@ -480,27 +486,107 @@ border-radius: 125;
        <number>0</number>
       </property>
       <item>
-       <widget class="QLabel" name="labelTechnologiesTxt">
+       <widget class="QWidget" name="widgetTechnologiesTitle" native="true">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
-        <property name="font">
-         <font>
-          <pointsize>26</pointsize>
-         </font>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>60</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>60</height>
+         </size>
         </property>
         <property name="styleSheet">
-         <string notr="true">#labelTechnologiesTxt{
+         <string notr="true">#widgetTechnologiesTitle{
 border: none;
 border-bottom: 2px solid #555;
 }</string>
         </property>
-        <property name="text">
-         <string>Tecnologías</string>
-        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_6">
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QLabel" name="labelTechnologiesTitle">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>26</pointsize>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true"/>
+           </property>
+           <property name="text">
+            <string>Tecnologías</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButtonAddTechnology">
+           <property name="minimumSize">
+            <size>
+             <width>40</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>40</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">#pushButtonAddTechnology{
+border-radius: 20;
+}
+
+#pushButtonAddTechnology:hover{
+background-color: #334;
+}</string>
+           </property>
+           <property name="text">
+            <string>+</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_4">
+           <property name="orientation">
+            <enum>Qt::Orientation::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
        </widget>
       </item>
       <item>
@@ -526,7 +612,7 @@ border-bottom: 2px solid #555;
         <property name="widgetResizable">
          <bool>true</bool>
         </property>
-        <widget class="QWidget" name="scrollAreaWidgetContents">
+        <widget class="QWidget" name="scrollAreaTechnologyWidgetContents">
          <property name="geometry">
           <rect>
            <x>0</x>
@@ -548,90 +634,6 @@ border-bottom: 2px solid #555;
           <property name="bottomMargin">
            <number>0</number>
           </property>
-          <item>
-           <widget class="QWidget" name="widgetAddTechnology" native="true">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>120</width>
-              <height>160</height>
-             </size>
-            </property>
-            <layout class="QVBoxLayout" name="verticalLayout_7">
-             <item alignment="Qt::AlignmentFlag::AlignHCenter">
-              <widget class="QPushButton" name="pushButtonAddTechnology">
-               <property name="minimumSize">
-                <size>
-                 <width>100</width>
-                 <height>100</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>100</width>
-                 <height>100</height>
-                </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">#pushButtonAddTechnology{
-border-radius: 50;
-}
-
-#pushButtonAddTechnology:hover{
-background-color: #334;
-}</string>
-               </property>
-               <property name="text">
-                <string>+</string>
-               </property>
-              </widget>
-             </item>
-             <item alignment="Qt::AlignmentFlag::AlignHCenter">
-              <widget class="QLabel" name="labelAddTechnologyTxt">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="text">
-                <string>Agregar Tecnología</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignmentFlag::AlignCenter</set>
-               </property>
-               <property name="wordWrap">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
-          <item>
-           <spacer name="horizontalSpacer">
-            <property name="orientation">
-             <enum>Qt::Orientation::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
          </layout>
         </widget>
        </widget>
@@ -640,7 +642,7 @@ background-color: #334;
     </widget>
    </item>
    <item>
-    <widget class="QWidget" name="widgetTechnologies_2" native="true">
+    <widget class="QWidget" name="widgetProjects" native="true">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
        <horstretch>0</horstretch>
@@ -664,27 +666,107 @@ background-color: #334;
        <number>0</number>
       </property>
       <item>
-       <widget class="QLabel" name="labelProjects">
+       <widget class="QWidget" name="widgetProjectsTitle" native="true">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
-        <property name="font">
-         <font>
-          <pointsize>26</pointsize>
-         </font>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>60</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>60</height>
+         </size>
         </property>
         <property name="styleSheet">
-         <string notr="true">#labelProjects{
+         <string notr="true">#widgetProjectsTitle{
 border: none;
 border-bottom: 2px solid #555;
 }</string>
         </property>
-        <property name="text">
-         <string>Proyectos</string>
-        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_7">
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QLabel" name="labelProjectsTitle">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>26</pointsize>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true"/>
+           </property>
+           <property name="text">
+            <string>Proyectos</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButtonAddProject">
+           <property name="minimumSize">
+            <size>
+             <width>40</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>40</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">#pushButtonAddProject{
+border-radius: 20;
+}
+
+#pushButtonAddProject:hover{
+background-color: #334;
+}</string>
+           </property>
+           <property name="text">
+            <string>+</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_5">
+           <property name="orientation">
+            <enum>Qt::Orientation::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
        </widget>
       </item>
       <item>
@@ -692,13 +774,13 @@ border-bottom: 2px solid #555;
         <property name="widgetResizable">
          <bool>true</bool>
         </property>
-        <widget class="QWidget" name="scrollAreaWidgetContents_2">
+        <widget class="QWidget" name="scrollAreaProjectWidgetContents">
          <property name="geometry">
           <rect>
            <x>0</x>
            <y>0</y>
            <width>1036</width>
-           <height>261</height>
+           <height>249</height>
           </rect>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_5">
@@ -711,78 +793,6 @@ border-bottom: 2px solid #555;
           <property name="rightMargin">
            <number>0</number>
           </property>
-          <item>
-           <widget class="QWidget" name="widgetAddProject" native="true">
-            <property name="minimumSize">
-             <size>
-              <width>200</width>
-              <height>220</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>200</width>
-              <height>220</height>
-             </size>
-            </property>
-            <layout class="QVBoxLayout" name="verticalLayout_11">
-             <item alignment="Qt::AlignmentFlag::AlignHCenter">
-              <widget class="QPushButton" name="pushButtonAddProject">
-               <property name="minimumSize">
-                <size>
-                 <width>180</width>
-                 <height>180</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>180</width>
-                 <height>180</height>
-                </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">#pushButtonAddProject{
-border-radius: 90;
-}
-
-#pushButtonAddProject:hover{
-background-color: #334;
-}</string>
-               </property>
-               <property name="text">
-                <string>+</string>
-               </property>
-              </widget>
-             </item>
-             <item alignment="Qt::AlignmentFlag::AlignHCenter">
-              <widget class="QLabel" name="label_2">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="text">
-                <string>Agregar Proyecto</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
-          <item>
-           <spacer name="horizontalSpacer_2">
-            <property name="orientation">
-             <enum>Qt::Orientation::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>775</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
          </layout>
         </widget>
        </widget>
