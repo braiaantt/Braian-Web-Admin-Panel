@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "loginpage.h"
+#include "portfoliopage.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -19,5 +21,12 @@ public:
 
 private:
     Ui::MainWindow *ui;
+
+    //------ Pages ------
+    LoginPage *loginPage;
+    PortfolioPage *portfolioPage;
+
+    //------ Initialization ------
+    void initPages();
 };
 #endif // MAINWINDOW_H
