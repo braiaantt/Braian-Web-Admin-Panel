@@ -36,6 +36,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
 
         #------ Constants ------
         consts/page_names.h
+        custome_widgets/technology.h custome_widgets/technology.cpp custome_widgets/technology.ui
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET web_admin_panel APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
@@ -56,6 +57,7 @@ else()
 endif()
 include_directories(
     consts
+    custome_widgets
 )
 target_link_libraries(web_admin_panel PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 
