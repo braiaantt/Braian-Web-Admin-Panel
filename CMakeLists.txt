@@ -30,19 +30,23 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
 
         #------ Custome Widgets ------
         custome_widgets/portfolioproject.h custome_widgets/portfolioproject.cpp custome_widgets/portfolioproject.ui
-
+        custome_widgets/technologywidget.h custome_widgets/technologywidget.cpp custome_widgets/technologywidget.ui
         #------ Resources ------
         images.qrc
 
         #------ Constants ------
         consts/page_names.h
-        custome_widgets/technology.h custome_widgets/technology.cpp custome_widgets/technology.ui
 
         #------ Utils ------
         utils/utils.h utils/utils.cpp
 
         #------ Dialos ------
         dialogs/createtechnology.h dialogs/createtechnology.cpp dialogs/createtechnology.ui
+        dialogs/createproject.h dialogs/createproject.cpp dialogs/createproject.ui
+
+        #------ Models ------
+        models/project.h models/project.cpp
+        models/technology.h models/technology.cpp
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET web_admin_panel APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
@@ -66,6 +70,7 @@ include_directories(
     custome_widgets
     utils
     dialogs
+    models
 )
 target_link_libraries(web_admin_panel PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 
