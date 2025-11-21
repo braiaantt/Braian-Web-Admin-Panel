@@ -17,7 +17,7 @@ public:
     ~CreateTechnology();
 
     //getters
-    Technology* getTechnology() const;
+    Technology getTechnology() const;
 
 private slots:
     void on_pushButtonSelectPhoto_clicked();
@@ -25,9 +25,7 @@ private slots:
 
 private:
     Ui::CreateTechnology *ui;
-    QString imgPath;
-    QPixmap pixmapImage;
-    Technology *technology;
+    Technology technology;
 
     bool checkValues();
 

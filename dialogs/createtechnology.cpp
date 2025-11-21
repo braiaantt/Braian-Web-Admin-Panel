@@ -19,7 +19,7 @@ CreateTechnology::~CreateTechnology()
 
 void CreateTechnology::on_pushButtonSelectPhoto_clicked()
 {
-    imgPath = Utils::selectImageFile();
+    QString imgPath = Utils::selectImageFile();
     if(imgPath.isEmpty())
         return;
 
@@ -29,9 +29,10 @@ void CreateTechnology::on_pushButtonSelectPhoto_clicked()
 
     QSize targetSize = ui->labelPhoto->size();
 
-    pixmapImage = Utils::roundedPixmap(original, targetSize);
+    QPixmap pixmapImage = Utils::roundedPixmap(original, targetSize);
 
     ui->labelPhoto->setPixmap(pixmapImage);
+    technology.setImgPath(imgPath);
 }
 
 
@@ -40,7 +41,7 @@ void CreateTechnology::on_pushButtonAccept_clicked()
     if(!checkValues()) return;
 
     QString techName = ui->lineEditName->text();
-    technology = new Technology(this->parentWidget(), pixmapImage, techName, imgPath);
+    technology.setName(techName);
 
     accept();
 }
@@ -54,7 +55,7 @@ bool CreateTechnology::checkValues()
         return false;
     }
 
-    if(pixmapImage.isNull()){
+    if(technology.getImgPath().isEmpty()){
         QMessageBox::warning(this, "Error", "La tecnología necesita una imagen!");
         return false;
     }
@@ -64,6 +65,6 @@ bool CreateTechnology::checkValues()
 
 //------ Getters ------
 
-Technology* CreateTechnology::getTechnology() const {
+Technology CreateTechnology::getTechnology() const {
     return technology;
 }
