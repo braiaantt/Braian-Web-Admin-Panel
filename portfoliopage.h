@@ -15,6 +15,10 @@ public:
     explicit PortfolioPage(QWidget *parent = nullptr);
     ~PortfolioPage();
 
+private slots:
+    //------ UI Slots ------
+    void on_pushButtonAddTechnology_clicked();
+
 private:
     Ui::PortfolioPage *ui;
 };
