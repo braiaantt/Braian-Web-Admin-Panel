@@ -19,6 +19,8 @@ private slots:
     //------ UI Slots ------
     void on_pushButtonAddTechnology_clicked();
 
+    void on_pushButtonAddProject_clicked();
+
 private:
     Ui::PortfolioPage *ui;
 };
