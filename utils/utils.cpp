@@ -54,3 +54,6 @@ QPixmap Utils::roundedPixmap(const QPixmap &pixmap, const QSize &targetSize)
     return dest;
 }
 
+void Utils::showWarning(QWidget* parent, const QString &message){
+    QMessageBox::warning(parent, "Warning", message);
+}
