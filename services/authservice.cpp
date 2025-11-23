@@ -1,11 +1,11 @@
 #include "authservice.h"
 #include <QJsonObject>
-#include <QSettings>
+#include "configmanager.h"
 
 AuthService::AuthService(ApiClient *apiClient):
     apiClient(apiClient)
 {
-
+    //Important delete reply after finished, autoDeleteReply desactivated at ApiClient initialization
 }
 
 void AuthService::login(const QString &email, const QString &password)
@@ -59,6 +59,5 @@ void AuthService::handleLoginFinished(const QByteArray &data)
     apiClient->setRefreshToken(refreshToken);
 
     //save refresh token
-    QSettings settings("Braian", "webAdminPanel");
-    settings.setValue("auth/refreshToken", refreshToken);
+    ConfigManager::setRefreshToken(refreshToken);
 }
