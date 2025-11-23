@@ -42,7 +42,7 @@ void LoginPage::loginSuccess()
 {
     ui->lineEditEmail->setText("");
     ui->lineEditPassword->setText("");
-    qDebug()<<"Conectadooo breoooooooo";
+    emit loginComplete();
 }
 
 void LoginPage::error(const QString &error)
