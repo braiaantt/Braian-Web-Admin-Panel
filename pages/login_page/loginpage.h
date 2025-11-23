@@ -16,6 +16,9 @@ public:
     explicit LoginPage(AuthService *authService, QWidget *parent = nullptr);
     ~LoginPage();
 
+signals:
+    void loginComplete();
+
 private slots:
     //------ UI Slots ------
     void on_pushButtonLogin_clicked();
