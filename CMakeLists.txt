@@ -30,25 +30,11 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
 
-        #------ Pages ------
-        portfoliopage.h portfoliopage.cpp portfoliopage.ui
-        loginpage.h loginpage.cpp loginpage.ui
-
-        #------ Custome Widgets ------
-        custome_widgets/portfolioproject.h custome_widgets/portfolioproject.cpp custome_widgets/portfolioproject.ui
-        custome_widgets/technologywidget.h custome_widgets/technologywidget.cpp custome_widgets/technologywidget.ui
-        #------ Resources ------
-        images.qrc
+        #------ Core ------
+        core/configmanager.h core/configmanager.cpp
 
         #------ Constants ------
         consts/page_names.h
-
-        #------ Utils ------
-        utils/utils.h utils/utils.cpp
-
-        #------ Dialos ------
-        dialogs/createtechnology.h dialogs/createtechnology.cpp dialogs/createtechnology.ui
-        dialogs/createproject.h dialogs/createproject.cpp dialogs/createproject.ui
 
         #------ Models ------
         models/project.h models/project.cpp
@@ -57,12 +43,26 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         #------ Network ------
         network/apiclient.h network/apiclient.cpp
 
+        #------ Pages ------
+        pages/portfolio_page/portfoliopage.h pages/portfolio_page/portfoliopage.cpp pages/portfolio_page/portfoliopage.ui
+        pages/login_page/loginpage.h pages/login_page/loginpage.cpp pages/login_page/loginpage.ui
+
+        #------ Custome Widgets ------
+        pages/portfolio_page/custome_widgets/portfolioproject.h pages/portfolio_page/custome_widgets/portfolioproject.cpp pages/portfolio_page/custome_widgets/portfolioproject.ui
+        pages/portfolio_page/custome_widgets/technologywidget.h pages/portfolio_page/custome_widgets/technologywidget.cpp pages/portfolio_page/custome_widgets/technologywidget.ui
+
+        #------ Resources ------
+        images.qrc
+
+        #------ Dialogs ------
+        pages/portfolio_page/dialogs/createtechnology.h pages/portfolio_page/dialogs/createtechnology.cpp pages/portfolio_page/dialogs/createtechnology.ui
+        pages/portfolio_page/dialogs/createproject.h pages/portfolio_page/dialogs/createproject.cpp pages/portfolio_page/dialogs/createproject.ui
+
         #------ Services ------
         services/authservice.h services/authservice.cpp
 
-        #------ Core ------
-        core/configmanager.h core/configmanager.cpp
-
+        #------ Utils ------
+        utils/utils.h utils/utils.cpp
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET web_admin_panel APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
@@ -83,13 +83,18 @@ else()
 endif()
 include_directories(
     consts
-    custome_widgets
-    utils
-    dialogs
+    core
     models
     network
+
+    pages/login_page
+    pages/portfolio_page
+
+    pages/portfolio_page/custome_widgets
+    pages/portfolio_page/dialogs
+
     services
-    core
+    utils
 )
 target_link_libraries(web_admin_panel PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 target_link_libraries(web_admin_panel PRIVATE BasicRequests::BasicRequests)
