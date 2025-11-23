@@ -4,6 +4,8 @@
 #include <QMainWindow>
 #include "loginpage.h"
 #include "portfoliopage.h"
+#include "apiclient.h"
+#include "authservice.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -21,12 +23,18 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    ApiClient apiClient;
 
     //------ Pages ------
     LoginPage *loginPage;
     PortfolioPage *portfolioPage;
 
+    //------ Services ------
+    AuthService *authService;
+
     //------ Initialization ------
+    void initApiClient();
+    void initServices();
     void initPages();
 };
 #endif // MAINWINDOW_H
