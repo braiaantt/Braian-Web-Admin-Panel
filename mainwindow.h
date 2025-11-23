@@ -21,6 +21,9 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+private slots:
+    void loginComplete();
+
 private:
     Ui::MainWindow *ui;
     ApiClient apiClient;
@@ -36,5 +39,6 @@ private:
     void initApiClient();
     void initServices();
     void initPages();
+    void connectSignalsAndSlots();
 };
 #endif // MAINWINDOW_H
