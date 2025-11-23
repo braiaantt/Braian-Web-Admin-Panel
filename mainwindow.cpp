@@ -1,13 +1,20 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 #include "page_names.h"
+#include "utils.h"
+#include "configmanager.h"
+#include <QTimer>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    initPages();
+    QTimer::singleShot(50, this, [this]{
+        initApiClient();
+        initServices();
+        initPages();
+    });
 }
 
 MainWindow::~MainWindow()
@@ -17,11 +24,28 @@ MainWindow::~MainWindow()
 
 //------ Initialization ------
 
-void MainWindow::initPages(){
+void MainWindow::initApiClient()
+{
+    ConfigManager config;
+    if(!config.load()){
+        Utils::showWarning(this, "Error al leer archivo de configuracion!");
+        return;
+    }
 
+    apiClient.setHostName(config.host());
+    apiClient.setLoginRoute(config.routeLogin());
+}
+
+void MainWindow::initServices()
+{
+    authService = new AuthService(&apiClient);
+}
+
+void MainWindow::initPages()
+{
     QHash<QString, QWidget*> pages;
 
-    loginPage = new LoginPage(this);
+    loginPage = new LoginPage(authService, this);
     portfolioPage = new PortfolioPage(this);
 
     pages.insert(PageName::LOGIN, loginPage);
@@ -35,7 +59,5 @@ void MainWindow::initPages(){
         } else {
             qDebug()<<"Null: "<<it.key()<<" or layout";
         }
-
     }
-
 }
