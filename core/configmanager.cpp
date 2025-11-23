@@ -1,4 +1,4 @@
-#include "ConfigManager.h"
+#include "configmanager.h"
 #include <QDir>
 #include <QCoreApplication>
 #include <CommonUtils/fileutils.h>
@@ -28,3 +28,20 @@ QString ConfigManager::routeLogin() const
     return routesObj.value("login").toString();
 }
 
+//------ Persistent settings ------
+
+QSettings& ConfigManager::settings()
+{
+    static QSettings settings("Braian", "webAdminPanel");
+    return settings;
+}
+
+void ConfigManager::setRefreshToken(const QString &token)
+{
+    settings().setValue("auth/refreshToken", token);
+}
+
+QString ConfigManager::refreshToken()
+{
+    return settings().value("auth/refreshToken").toString();
+}

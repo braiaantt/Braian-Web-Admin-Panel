@@ -2,6 +2,7 @@
 #define CONFIGMANAGER_H
 
 #include <QJsonObject>
+#include <QSettings>
 
 class ConfigManager
 {
@@ -12,9 +13,15 @@ public:
     QString host() const;
     QString routeLogin() const;
 
+    //------ Persistent settings ------
+    static QString refreshToken();
+    static void setRefreshToken(const QString &token);
+
 private:
     QJsonObject root;
     QJsonObject api;
+
+    static QSettings& settings();
 };
 
 #endif // CONFIGMANAGER_H
