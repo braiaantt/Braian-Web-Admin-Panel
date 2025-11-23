@@ -4,6 +4,7 @@
 #include "createproject.h"
 #include "portfolioproject.h"
 #include "technologywidget.h"
+#include "utils.h"
 
 PortfolioPage::PortfolioPage(QWidget *parent)
     : QWidget(parent)
@@ -49,3 +50,10 @@ void PortfolioPage::on_pushButtonAddProject_clicked()
     }
 }
 
+void PortfolioPage::on_pushButtonUpdatePhoto_clicked()
+{
+    QString imgPath = Utils::selectImageFile();
+    QPixmap pixmap(imgPath);
+    QPixmap roundedPixmap = Utils::roundedPixmap(pixmap, ui->labelPhoto->size());
+    ui->labelPhoto->setPixmap(roundedPixmap);
+}
