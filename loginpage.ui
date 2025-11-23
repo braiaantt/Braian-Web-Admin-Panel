@@ -85,7 +85,7 @@ color: #fff;
     </widget>
    </item>
    <item alignment="Qt::AlignmentFlag::AlignHCenter">
-    <widget class="QPushButton" name="pushButton">
+    <widget class="QPushButton" name="pushButtonLogin">
      <property name="minimumSize">
       <size>
        <width>180</width>
