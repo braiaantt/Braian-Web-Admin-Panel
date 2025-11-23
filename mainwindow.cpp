@@ -14,6 +14,7 @@ MainWindow::MainWindow(QWidget *parent)
         initApiClient();
         initServices();
         initPages();
+        connectSignalsAndSlots();
     });
 }
 
@@ -60,4 +61,22 @@ void MainWindow::initPages()
             qDebug()<<"Null: "<<it.key()<<" or layout";
         }
     }
+}
+
+void MainWindow::connectSignalsAndSlots()
+{
+    connect(loginPage, &LoginPage::loginComplete, this, &MainWindow::loginComplete);
+}
+
+//------ Private Slots ------
+
+void MainWindow::loginComplete()
+{
+    QWidget* page = ui->stackedWidgetPages->findChild<QWidget*>(PageName::PORTFOLIO);
+    if(!page){
+        qDebug()<<"Page '"<<PageName::PORTFOLIO<<"' Not Found";
+        return;
+    }
+
+    ui->stackedWidgetPages->setCurrentWidget(page);
 }
