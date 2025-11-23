@@ -21,6 +21,8 @@ private slots:
 
     void on_pushButtonAddProject_clicked();
 
+    void on_pushButtonUpdatePhoto_clicked();
+
 private:
     Ui::PortfolioPage *ui;
 };
