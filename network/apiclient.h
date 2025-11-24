@@ -12,10 +12,14 @@ public:
 
     //------ Requests ------
     QNetworkReply* login(const QByteArray &body);
+    QNetworkReply* getPortfolio();
+    QNetworkReply* getPhoto(const QString &path);
 
     //------ Setters ------
     void setHostName(const QString &hostName);
-    void setLoginRoute(const QString &loginRoute);
+    void setLoginEndpoint(const QString &loginEndpoint);
+    void setPortfolioEndpoint(const QString &portfolioEndpoint);
+    void setPhotoEndpoint(const QString &photoEndpoint);
     void setAccessToken(const QString &accesstoken);
     void setRefreshToken(const QString &refreshToken);
 
@@ -25,9 +29,10 @@ private:
     QString accessToken;
     QString refreshToken;
 
-    //------ Routes ------
-    QString loginRoute;
-
+    //------ Endpoints ------
+    QString loginEndpoint;
+    QString portfolioEndpoint;
+    QString photoEndpoint;
 };
 
 #endif // APICLIENT_H
