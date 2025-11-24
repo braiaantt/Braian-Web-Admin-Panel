@@ -6,16 +6,25 @@
 #include "technologywidget.h"
 #include "utils.h"
 
-PortfolioPage::PortfolioPage(QWidget *parent)
-    : QWidget(parent)
+PortfolioPage::PortfolioPage(PortfolioService *portfolioService, QWidget *parent)
+    : QWidget(parent), portfolioService(portfolioService)
     , ui(new Ui::PortfolioPage)
 {
     ui->setupUi(this);
+    connectSignalsAndSlots();
 }
 
 PortfolioPage::~PortfolioPage()
 {
     delete ui;
+}
+
+//------ Initialization ------
+
+void PortfolioPage::connectSignalsAndSlots()
+{
+    connect(portfolioService, &PortfolioService::portfolioReceipt, this, &PortfolioPage::setPortfolio);
+    connect(portfolioService, &PortfolioService::errorOcurred, this, &PortfolioPage::errorOcurred);
 }
 
 //------ UI Slots ------
@@ -56,4 +65,31 @@ void PortfolioPage::on_pushButtonUpdatePhoto_clicked()
     QPixmap pixmap(imgPath);
     QPixmap roundedPixmap = Utils::roundedPixmap(pixmap, ui->labelPhoto->size());
     ui->labelPhoto->setPixmap(roundedPixmap);
+}
+
+//------ Public Methods------
+
+void PortfolioPage::loadPortfolio()
+{
+    portfolioService->getPortfolio();
+}
+
+//------ Private Slots ------
+
+void PortfolioPage::setPortfolio(const Portfolio &portfolio)
+{
+    ui->lineEditName->setText(portfolio.getUserName());
+    ui->lineEditProfession->setText(portfolio.getUserProfession());
+    ui->plainTextAbout->appendPlainText(portfolio.getUserAbout());
+}
+
+void PortfolioPage::setUserPhoto(const QPixmap &pixmap)
+{
+    QPixmap rounded = Utils::roundedPixmap(pixmap, ui->labelPhoto->size());
+    ui->labelPhoto->setPixmap(rounded);
+}
+
+void PortfolioPage::errorOcurred(const QString &message)
+{
+    Utils::showWarning(this, message);
 }
