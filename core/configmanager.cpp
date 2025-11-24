@@ -22,10 +22,22 @@ QString ConfigManager::host() const
     return api.value("hostName").toString();
 }
 
-QString ConfigManager::routeLogin() const
+QString ConfigManager::endpointLogin() const
 {
-    const QJsonObject routesObj = api.value("routes").toObject();
+    const QJsonObject routesObj = api.value("endpoints").toObject();
     return routesObj.value("login").toString();
+}
+
+QString ConfigManager::endpointPortfolio() const
+{
+    const QJsonObject routesObj = api.value("endpoints").toObject();
+    return routesObj.value("portfolio").toString();
+}
+
+QString ConfigManager::endpointTechnology() const
+{
+    const QJsonObject routesObj = api.value("endpoints").toObject();
+    return routesObj.value("technology").toString();
 }
 
 //------ Persistent settings ------

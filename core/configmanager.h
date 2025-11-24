@@ -11,7 +11,9 @@ public:
 
     bool load();
     QString host() const;
-    QString routeLogin() const;
+    QString endpointLogin() const;
+    QString endpointPortfolio() const;
+    QString endpointTechnology() const;
 
     //------ Persistent settings ------
     static QString refreshToken();
