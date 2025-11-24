@@ -14,8 +14,19 @@ QNetworkReply* ApiClient::login(const QByteArray &body)
     QMap<QByteArray,QByteArray> headers;
     headers.insert("Content-Type", "application/json");
 
-    return basicRequests->post(loginRoute, body, headers);
+    return basicRequests->post(loginEndpoint, body, headers);
 }
+
+QNetworkReply* ApiClient::getPortfolio()
+{
+    return basicRequests->get(portfolioEndpoint);
+}
+
+QNetworkReply* ApiClient::getPhoto(const QString &path)
+{
+    return basicRequests->get(photoEndpoint + "/" + path);
+}
+
 //------ Setters ------
 
 void ApiClient::setHostName(const QString &_hostName)
@@ -24,8 +35,18 @@ void ApiClient::setHostName(const QString &_hostName)
     basicRequests->setHostName(_hostName);
 }
 
-void ApiClient::setLoginRoute(const QString &route){
-    loginRoute = route;
+void ApiClient::setLoginEndpoint(const QString &endpoint){
+    loginEndpoint= endpoint;
+}
+
+void ApiClient::setPortfolioEndpoint(const QString &endpoint)
+{
+    portfolioEndpoint = endpoint;
+}
+
+void ApiClient::setPhotoEndpoint(const QString &endpoint)
+{
+    photoEndpoint = endpoint;
 }
 
 void ApiClient::setAccessToken(const QString &token){
