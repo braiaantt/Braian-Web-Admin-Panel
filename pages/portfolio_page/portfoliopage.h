@@ -2,6 +2,8 @@
 #define PORTFOLIOPAGE_H
 
 #include <QWidget>
+#include "portfolioservice.h"
+#include "portfolio.h"
 
 namespace Ui {
 class PortfolioPage;
@@ -12,10 +14,16 @@ class PortfolioPage : public QWidget
     Q_OBJECT
 
 public:
-    explicit PortfolioPage(QWidget *parent = nullptr);
+    explicit PortfolioPage(PortfolioService *portfolioService, QWidget *parent = nullptr);
     ~PortfolioPage();
 
+    void loadPortfolio();
+
 private slots:
+    void setPortfolio(const Portfolio &portfolio);
+    void setUserPhoto(const QPixmap &pixmap);
+    void errorOcurred(const QString &message);
+
     //------ UI Slots ------
     void on_pushButtonAddTechnology_clicked();
 
@@ -25,6 +33,10 @@ private slots:
 
 private:
     Ui::PortfolioPage *ui;
+    PortfolioService *portfolioService;
+
+    //------ Initialization ------
+    void connectSignalsAndSlots();
 };
 
 #endif // PORTFOLIOPAGE_H
