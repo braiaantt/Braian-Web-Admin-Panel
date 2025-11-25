@@ -34,12 +34,14 @@ void MainWindow::initApiClient()
     }
 
     apiClient.setHostName(config.host());
-    apiClient.setLoginRoute(config.routeLogin());
+    apiClient.setLoginEndpoint(config.endpointLogin());
+    apiClient.setPortfolioEndpoint(config.endpointPortfolio());
 }
 
 void MainWindow::initServices()
 {
     authService = new AuthService(&apiClient);
+    portfolioService = new PortfolioService(&apiClient);
 }
 
 void MainWindow::initPages()
@@ -47,7 +49,7 @@ void MainWindow::initPages()
     QHash<QString, QWidget*> pages;
 
     loginPage = new LoginPage(authService, this);
-    portfolioPage = new PortfolioPage(this);
+    portfolioPage = new PortfolioPage(portfolioService, this);
 
     pages.insert(PageName::LOGIN, loginPage);
     pages.insert(PageName::PORTFOLIO, portfolioPage);
@@ -78,5 +80,6 @@ void MainWindow::loginComplete()
         return;
     }
 
+    portfolioPage->loadPortfolio();
     ui->stackedWidgetPages->setCurrentWidget(page);
 }
