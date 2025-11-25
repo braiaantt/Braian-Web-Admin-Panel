@@ -6,6 +6,7 @@
 #include "portfoliopage.h"
 #include "apiclient.h"
 #include "authservice.h"
+#include "portfolioservice.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -34,6 +35,7 @@ private:
 
     //------ Services ------
     AuthService *authService;
+    PortfolioService *portfolioService;
 
     //------ Initialization ------
     void initApiClient();
