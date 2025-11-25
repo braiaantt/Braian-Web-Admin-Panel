@@ -15,6 +15,7 @@ list(APPEND CMAKE_PREFIX_PATH "D:/Braian/Desarrollo/LocalLibs/CommonUtils")
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 find_package(Qt6 REQUIRED COMPONENTS Network)
+find_package(Qt6 REQUIRED COMPONENTS Core)
 find_package(BasicRequests REQUIRED)
 find_package(CommonUtils REQUIRED)
 
@@ -37,6 +38,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         consts/page_names.h
 
         #------ Models ------
+        models/portfolio.h models/portfolio.cpp
         models/project.h models/project.cpp
         models/technology.h models/technology.cpp
 
@@ -60,9 +62,11 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
 
         #------ Services ------
         services/authservice.h services/authservice.cpp
+        services/portfolioservice.h services/portfolioservice.cpp
 
         #------ Utils ------
         utils/utils.h utils/utils.cpp
+        utils/networkutils.h utils/networkutils.cpp
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET web_admin_panel APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
@@ -99,6 +103,7 @@ include_directories(
 target_link_libraries(web_admin_panel PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 target_link_libraries(web_admin_panel PRIVATE BasicRequests::BasicRequests)
 target_link_libraries(web_admin_panel PRIVATE CommonUtils::CommonUtils)
+target_link_libraries(web_admin_panel PRIVATE Qt6::Core)
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an
