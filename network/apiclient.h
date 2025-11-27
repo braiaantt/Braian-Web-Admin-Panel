@@ -21,6 +21,7 @@ public:
     //-- Technology --
     QNetworkReply* postTechnology(QHttpMultiPart *multipart);
     QNetworkReply* getTechnologies();
+    QNetworkReply* deleteTechnology(int techId);
 
     //-- Files --
     QNetworkReply* getImage(const QString &path);
