@@ -5,9 +5,10 @@
 #include "portfolioproject.h"
 #include "technologywidget.h"
 #include "utils.h"
+#include "technologyhandler.h"
 
-PortfolioPage::PortfolioPage(PortfolioService *portfolioService, QWidget *parent)
-    : QWidget(parent), portfolioService(portfolioService)
+PortfolioPage::PortfolioPage(PortfolioService *portfolioService, TechnologyService* technologyService, QWidget *parent)
+    : QWidget(parent), portfolioService(portfolioService), technologyService(technologyService)
     , ui(new Ui::PortfolioPage)
 {
     ui->setupUi(this);
@@ -65,6 +66,12 @@ void PortfolioPage::on_pushButtonUpdatePhoto_clicked()
     QPixmap pixmap(imgPath);
     QPixmap roundedPixmap = Utils::roundedPixmap(pixmap, ui->labelPhoto->size());
     ui->labelPhoto->setPixmap(roundedPixmap);
+}
+
+void PortfolioPage::on_pushButtonHandleTechnologies_clicked()
+{
+    TechnologyHandler techHandler(technologyService, Mode::Delete, this);
+    techHandler.exec();
 }
 
 //------ Public Methods------
