@@ -16,11 +16,30 @@ public:
     explicit TechnologyWidget(QWidget *parent = nullptr, const Technology &technology = Technology());
     ~TechnologyWidget();
 
+    //------ Getters ------
+    const Technology& getTechnology() const;
+    int isSelected() const;
+
+    //------ Setters ------
+    void setTechIcon(const QPixmap &pixmap);
+
+    //------ Config Methods ------
+    void enableDeleteButton();
+    void enableRadioButton();
+
+signals:
+    void deleteTechnology(const Technology &tech);
+
+private slots:
+    //------ UI Slots ------
+    void on_pushButtonDelete_clicked();
+
 private:
     Ui::Technology *ui;
+    Technology technology;
 
     //------ Initialization ------
-    void init(const Technology &technology);
+    void init();
 
 };
 
