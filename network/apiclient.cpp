@@ -8,7 +8,7 @@ ApiClient::ApiClient(QObject *parent) :
 }
 
 //------ Requests ------
-
+//-- Auth --
 QNetworkReply* ApiClient::login(const QByteArray &body)
 {
     QMap<QByteArray,QByteArray> headers;
@@ -17,14 +17,34 @@ QNetworkReply* ApiClient::login(const QByteArray &body)
     return basicRequests->post(loginEndpoint, body, headers);
 }
 
+//-- Portfolio --
 QNetworkReply* ApiClient::getPortfolio()
 {
     return basicRequests->get(portfolioEndpoint);
 }
 
-QNetworkReply* ApiClient::getPhoto(const QString &path)
+//-- Technology --
+
+QNetworkReply* ApiClient::postTechnology(QHttpMultiPart *multiPart)
 {
-    return basicRequests->get(photoEndpoint + "/" + path);
+    QMap<QByteArray,QByteArray> headers;
+    headers.insert("Authorization", ("Bearer " + accessToken).toUtf8());
+
+    return basicRequests->postMultipart(technologyEndpoint, multiPart, headers);
+}
+
+QNetworkReply* ApiClient::getTechnologies()
+{
+    QMap<QByteArray,QByteArray> headers;
+    headers.insert("Authorization", ("Bearer " + accessToken).toUtf8());
+    return basicRequests->get(technologyEndpoint, headers);
+}
+
+//-- Files --
+
+QNetworkReply* ApiClient::getImage(const QString &path)
+{
+    return basicRequests->get(imageEndpoint + path);
 }
 
 //------ Setters ------
@@ -44,9 +64,14 @@ void ApiClient::setPortfolioEndpoint(const QString &endpoint)
     portfolioEndpoint = endpoint;
 }
 
-void ApiClient::setPhotoEndpoint(const QString &endpoint)
+void ApiClient::setImageEndpoint(const QString &endpoint)
 {
-    photoEndpoint = endpoint;
+    imageEndpoint = endpoint;
+}
+
+void ApiClient::setTechnologyEndpoint(const QString &endpoint)
+{
+    technologyEndpoint = endpoint;
 }
 
 void ApiClient::setAccessToken(const QString &token){
