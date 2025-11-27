@@ -26,6 +26,8 @@ private slots:
     void setTechnologies(const QVector<Technology> &technologies);
     void setTechIcon(int techId, const QPixmap &pixmap);
     void techCreated(int techId);
+    void techDeleted(int techId);
+    void deleteTechnology(const Technology &tech);
     void errorOcurred(const QString &message);
 
     //------ UI Slots ------
