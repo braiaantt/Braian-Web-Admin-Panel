@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <basicrequests.h>
+#include <QHttpMultiPart>
 
 class ApiClient : public QObject
 {
@@ -11,15 +12,25 @@ public:
     ApiClient(QObject *parent = nullptr);
 
     //------ Requests ------
+    //-- Auth --
     QNetworkReply* login(const QByteArray &body);
+
+    //-- Portfolio --
     QNetworkReply* getPortfolio();
-    QNetworkReply* getPhoto(const QString &path);
+
+    //-- Technology --
+    QNetworkReply* postTechnology(QHttpMultiPart *multipart);
+    QNetworkReply* getTechnologies();
+
+    //-- Files --
+    QNetworkReply* getImage(const QString &path);
 
     //------ Setters ------
     void setHostName(const QString &hostName);
     void setLoginEndpoint(const QString &loginEndpoint);
     void setPortfolioEndpoint(const QString &portfolioEndpoint);
-    void setPhotoEndpoint(const QString &photoEndpoint);
+    void setImageEndpoint(const QString &photoEndpoint);
+    void setTechnologyEndpoint(const QString &technologyEndpoint);
     void setAccessToken(const QString &accesstoken);
     void setRefreshToken(const QString &refreshToken);
 
@@ -32,7 +43,8 @@ private:
     //------ Endpoints ------
     QString loginEndpoint;
     QString portfolioEndpoint;
-    QString photoEndpoint;
+    QString technologyEndpoint;
+    QString imageEndpoint;
 };
 
 #endif // APICLIENT_H
