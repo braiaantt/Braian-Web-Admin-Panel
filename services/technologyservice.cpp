@@ -50,6 +50,18 @@ void TechnologyService::getTechIcon(int techId, const QString &path)
     connect(reply, &QNetworkReply::finished, this, &TechnologyService::getTechIconFinished);
 }
 
+void TechnologyService::deleteTechnology(int techId)
+{
+    QNetworkReply *reply = apiClient->deleteTechnology(techId);
+    if(!reply){
+        emit errorOcurred("TechnologyService - DeleteTech: Reply Null. Not Sended.");
+        return;
+    }
+
+    reply->setProperty("techId", techId);
+    connect(reply, &QNetworkReply::finished, this, &TechnologyService::deleteTechnologyFinished);
+}
+
 //------ Private Slots ------
 
 void TechnologyService::getTechnologiesFinished()
@@ -103,6 +115,20 @@ void TechnologyService::addTechnologyFinished()
     int techId = handleAddTechnology(reply->readAll());
     emit techCreated(techId);
     reply->deleteLater();
+}
+
+void TechnologyService::deleteTechnologyFinished()
+{
+    QNetworkReply* reply = qobject_cast<QNetworkReply*>(sender());
+    QString errorMsg;
+    if(!NetworkUtils::checkError(reply, errorMsg)){
+        emit errorOcurred("TechnologyService - DeleteTech: " + errorMsg);
+        reply->deleteLater();
+        return;
+    }
+
+    int techId = reply->property("techId").toInt();
+    emit techDeleted(techId);
 }
 
 //------ Request Handlers ------
