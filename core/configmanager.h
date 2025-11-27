@@ -14,6 +14,7 @@ public:
     QString endpointLogin() const;
     QString endpointPortfolio() const;
     QString endpointTechnology() const;
+    QString endpointImage() const;
 
     //------ Persistent settings ------
     static QString refreshToken();
