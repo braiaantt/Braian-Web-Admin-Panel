@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include "portfolioservice.h"
+#include "technologyservice.h"
 #include "portfolio.h"
 
 namespace Ui {
@@ -14,7 +15,7 @@ class PortfolioPage : public QWidget
     Q_OBJECT
 
 public:
-    explicit PortfolioPage(PortfolioService *portfolioService, QWidget *parent = nullptr);
+    explicit PortfolioPage(PortfolioService *portfolioService, TechnologyService *technologyService, QWidget *parent = nullptr);
     ~PortfolioPage();
 
     void loadPortfolio();
@@ -31,9 +32,12 @@ private slots:
 
     void on_pushButtonUpdatePhoto_clicked();
 
+    void on_pushButtonHandleTechnologies_clicked();
+
 private:
     Ui::PortfolioPage *ui;
     PortfolioService *portfolioService;
+    TechnologyService *technologyService;
 
     //------ Initialization ------
     void connectSignalsAndSlots();
