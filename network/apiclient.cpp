@@ -40,6 +40,15 @@ QNetworkReply* ApiClient::getTechnologies()
     return basicRequests->get(technologyEndpoint, headers);
 }
 
+QNetworkReply* ApiClient::deleteTechnology(int techId)
+{
+    QString resourcePath = technologyEndpoint + "/" +QString::number(techId);
+    QMap<QByteArray,QByteArray> headers;
+    headers.insert("Authorization", ("Bearer " + accessToken).toUtf8());
+
+    return basicRequests->deleteResource(resourcePath, headers);
+}
+
 //-- Files --
 
 QNetworkReply* ApiClient::getImage(const QString &path)
