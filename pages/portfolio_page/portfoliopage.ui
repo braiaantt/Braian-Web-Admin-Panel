@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1036</width>
+    <width>1141</width>
     <height>933</height>
    </rect>
   </property>
@@ -443,6 +443,13 @@ border-radius: 125;
           </layout>
          </widget>
         </item>
+        <item alignment="Qt::AlignmentFlag::AlignTop">
+         <widget class="QPushButton" name="pushButtonHandleTechnologies">
+          <property name="text">
+           <string>Manejar Tecnologias</string>
+          </property>
+         </widget>
+        </item>
         <item>
          <spacer name="horizontalSpacer_3">
           <property name="orientation">
@@ -617,7 +624,7 @@ background-color: #334;
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>1036</width>
+           <width>1141</width>
            <height>160</height>
           </rect>
          </property>
@@ -792,7 +799,7 @@ background-color: #334;
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>1036</width>
+           <width>1141</width>
            <height>251</height>
           </rect>
          </property>
