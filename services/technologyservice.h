@@ -15,17 +15,20 @@ public:
     void addTechnology(const Technology &tech);
     void getTechIcon(int techId, const QString &path);
     void getTechnologies();
+    void deleteTechnology(int techId);
 
 signals:
     void technologiesReceipt(const QVector<Technology>& technologies);
     void techIconReceipt(int techId, const QPixmap &pixmap);
     void techCreated(int techId);
+    void techDeleted(int techId);
     void errorOcurred(const QString &message);
 
 private slots:
     void getTechnologiesFinished();
     void getTechIconFinished();
     void addTechnologyFinished();
+    void deleteTechnologyFinished();
 
 private:
     ApiClient* apiClient;
