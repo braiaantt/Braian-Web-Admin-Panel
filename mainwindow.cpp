@@ -36,12 +36,15 @@ void MainWindow::initApiClient()
     apiClient.setHostName(config.host());
     apiClient.setLoginEndpoint(config.endpointLogin());
     apiClient.setPortfolioEndpoint(config.endpointPortfolio());
+    apiClient.setTechnologyEndpoint(config.endpointTechnology());
+    apiClient.setImageEndpoint(config.endpointImage());
 }
 
 void MainWindow::initServices()
 {
     authService = new AuthService(&apiClient);
     portfolioService = new PortfolioService(&apiClient);
+    technologyService = new TechnologyService(&apiClient);
 }
 
 void MainWindow::initPages()
@@ -49,7 +52,7 @@ void MainWindow::initPages()
     QHash<QString, QWidget*> pages;
 
     loginPage = new LoginPage(authService, this);
-    portfolioPage = new PortfolioPage(portfolioService, this);
+    portfolioPage = new PortfolioPage(portfolioService, technologyService, this);
 
     pages.insert(PageName::LOGIN, loginPage);
     pages.insert(PageName::PORTFOLIO, portfolioPage);
