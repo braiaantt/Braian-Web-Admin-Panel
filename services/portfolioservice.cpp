@@ -23,7 +23,7 @@ void PortfolioService::getPortfolio()
 
 void PortfolioService::getUserPhoto(const QString &path)
 {
-    QNetworkReply *reply = apiClient->getPhoto(path);
+    QNetworkReply *reply = apiClient->getImage(path);
     if(!reply){
         emit errorOcurred("PortfolioService - GetPhoto: Null Reply. Not Sended");
         return;
@@ -66,7 +66,7 @@ void PortfolioService::getUserPhotoFinished()
     }
 
     QString errorMsg;
-    if(NetworkUtils::checkError(reply, errorMsg)){
+    if(!NetworkUtils::checkError(reply, errorMsg)){
         emit errorOcurred("PortfolioService - GetPhoto: " + errorMsg);
         reply->deleteLater();
         return;
