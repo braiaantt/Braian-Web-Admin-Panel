@@ -30,6 +30,7 @@ void TechnologyHandler::connectSignalsAndSlots()
     connect(technologyService, &TechnologyService::technologiesReceipt, this, &TechnologyHandler::setTechnologies);
     connect(technologyService, &TechnologyService::techIconReceipt, this, &TechnologyHandler::setTechIcon);
     connect(technologyService, &TechnologyService::techCreated, this, &TechnologyHandler::techCreated);
+    connect(technologyService, &TechnologyService::techDeleted, this, &TechnologyHandler::techDeleted);
     connect(technologyService, &TechnologyService::errorOcurred, this, &TechnologyHandler::errorOcurred);
 }
 
@@ -50,6 +51,7 @@ void TechnologyHandler::setTechnologies(const QVector<Technology> &technologies)
 
         layout->insertWidget(layout->count()-1, widget);
         technologyService->getTechIcon(tech.getId(), tech.getImgPath());
+        connect(widget, &TechnologyWidget::deleteTechnology, this, &TechnologyHandler::deleteTechnology);
     }
 }
 
@@ -69,7 +71,6 @@ void TechnologyHandler::setTechIcon(int techId, const QPixmap &pixmap)
             techWidget->setTechIcon(pixmap);
             break;
         }
-
     }
 }
 
@@ -87,6 +88,32 @@ void TechnologyHandler::techCreated(int techId)
     mode == Mode::Read ? widget->enableRadioButton() : widget->enableDeleteButton();
 
     layout->insertWidget(layout->count()-1, widget);
+}
+
+void TechnologyHandler::deleteTechnology(const Technology &tech)
+{
+    technologyService->deleteTechnology(tech.getId());
+}
+
+void TechnologyHandler::techDeleted(int techId)
+{
+    QHBoxLayout *layout = (QHBoxLayout*)ui->scrollAreaTechnologiesWidgetContents->layout();
+
+    if(!layout){
+        Utils::showWarning(this, "No Layout For TechnologyWidget");
+        return;
+    }
+
+    for(int i = 0; i<layout->count(); i++){
+        QWidget *widget= layout->itemAt(i)->widget();
+        TechnologyWidget *techWidget = qobject_cast<TechnologyWidget*>(widget);
+
+        if(techWidget && techWidget->getTechnology().getId() == techId){
+            layout->removeWidget(techWidget);
+            techWidget->deleteLater();
+            break;
+        }
+    }
 }
 
 void TechnologyHandler::errorOcurred(const QString &message)
