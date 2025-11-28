@@ -18,7 +18,7 @@ void TechnologyService::addTechnology(const Technology &tech)
     QNetworkReply *reply = apiClient->postTechnology(multiPart);
 
     if(!reply){
-        emit errorOcurred("TechnologyService - GetTechnologies: Reply Null. Not Sended.");
+        emit errorOcurred("TechnologyService - AddTechnology: Reply Null. Not Sended.");
         multiPart->deleteLater();
         return;
     }
