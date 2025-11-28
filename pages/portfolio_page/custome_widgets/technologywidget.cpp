@@ -62,3 +62,8 @@ void TechnologyWidget::setTechIcon(const QPixmap &pixmap)
     QPixmap rounded = Utils::roundedPixmap(pixmap, ui->labelPhoto->size());
     ui->labelPhoto->setPixmap(rounded);
 }
+
+void TechnologyWidget::setSelected(bool state)
+{
+    ui->radioButton->setChecked(state);
+}
