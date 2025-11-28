@@ -129,7 +129,7 @@ background-color: #334;
     </widget>
    </item>
    <item>
-    <widget class="QScrollArea" name="scrollAreaTechnologies">
+    <widget class="TechnologiesView" name="scrollAreaTechnologies">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
        <horstretch>0</horstretch>
@@ -189,6 +189,14 @@ background-color: #334;
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>TechnologiesView</class>
+   <extends>QScrollArea</extends>
+   <header>technologiesview.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
