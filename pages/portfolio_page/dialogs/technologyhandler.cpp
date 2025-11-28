@@ -38,56 +38,38 @@ void TechnologyHandler::connectSignalsAndSlots()
 
 void TechnologyHandler::setTechnologies(const QVector<Technology> &technologies)
 {
-    QHBoxLayout *layout = (QHBoxLayout*)ui->scrollAreaTechnologiesWidgetContents->layout();
-    if(!layout){
-        Utils::showWarning(this, "No Layout For TechnologyWidget");
-        return;
-    }
-
     for(const Technology &tech : technologies){
 
+        //Create and initializate
         TechnologyWidget *widget = new TechnologyWidget(nullptr, tech);
         mode == Mode::Read ? widget->enableRadioButton() : widget->enableDeleteButton();
-
-        layout->insertWidget(layout->count()-1, widget);
-        technologyService->getTechIcon(tech.getId(), tech.getImgPath());
         connect(widget, &TechnologyWidget::deleteTechnology, this, &TechnologyHandler::deleteTechnology);
+
+        //Get image from server
+        technologyService->getTechIcon(tech.getId(), tech.getImgPath());
+
+        //Add widget
+        ui->scrollAreaTechnologies->addTechnologyWidget(widget);
     }
 }
 
 void TechnologyHandler::setTechIcon(int techId, const QPixmap &pixmap)
 {
-    QLayout *layout = ui->scrollAreaTechnologiesWidgetContents->layout();
-    if(!layout){
-        Utils::showWarning(this, "No Layout For TechnologyWidget");
-        return;
-    }
-
-    for(int i = 0; i<layout->count(); i++){
-        QWidget *widget= layout->itemAt(i)->widget();
-        TechnologyWidget *techWidget = qobject_cast<TechnologyWidget*>(widget);
-
-        if(techWidget && techWidget->getTechnology().getId() == techId){
-            techWidget->setTechIcon(pixmap);
-            break;
-        }
-    }
+    ui->scrollAreaTechnologies->setTechIcon(techId, pixmap);
 }
 
 void TechnologyHandler::techCreated(int techId)
 {
-    QHBoxLayout *layout = (QHBoxLayout*)ui->scrollAreaTechnologiesWidgetContents->layout();
-
-    if(!layout){
-        Utils::showWarning(this, "No Layout For TechnologyWidget");
-        return;
-    }
     cacheTech.setId(techId);
+
+    //Create and initializate
     TechnologyWidget *widget = new TechnologyWidget(nullptr, cacheTech);
     widget->setTechIcon(QPixmap(cacheTech.getImgPath()));
     mode == Mode::Read ? widget->enableRadioButton() : widget->enableDeleteButton();
+    connect(widget, &TechnologyWidget::deleteTechnology, this, &TechnologyHandler::deleteTechnology);
 
-    layout->insertWidget(layout->count()-1, widget);
+    //Add widget
+    ui->scrollAreaTechnologies->addTechnologyWidget(widget);
 }
 
 void TechnologyHandler::deleteTechnology(const Technology &tech)
@@ -97,23 +79,7 @@ void TechnologyHandler::deleteTechnology(const Technology &tech)
 
 void TechnologyHandler::techDeleted(int techId)
 {
-    QHBoxLayout *layout = (QHBoxLayout*)ui->scrollAreaTechnologiesWidgetContents->layout();
-
-    if(!layout){
-        Utils::showWarning(this, "No Layout For TechnologyWidget");
-        return;
-    }
-
-    for(int i = 0; i<layout->count(); i++){
-        QWidget *widget= layout->itemAt(i)->widget();
-        TechnologyWidget *techWidget = qobject_cast<TechnologyWidget*>(widget);
-
-        if(techWidget && techWidget->getTechnology().getId() == techId){
-            layout->removeWidget(techWidget);
-            techWidget->deleteLater();
-            break;
-        }
-    }
+    ui->scrollAreaTechnologies->deleteTechnologyWidget(techId);
 }
 
 void TechnologyHandler::errorOcurred(const QString &message)
