@@ -52,6 +52,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         #------ Custome Widgets ------
         pages/portfolio_page/custome_widgets/portfolioproject.h pages/portfolio_page/custome_widgets/portfolioproject.cpp pages/portfolio_page/custome_widgets/portfolioproject.ui
         pages/portfolio_page/custome_widgets/technologywidget.h pages/portfolio_page/custome_widgets/technologywidget.cpp pages/portfolio_page/custome_widgets/technologywidget.ui
+        pages/portfolio_page/custome_widgets/technologiesview.h pages/portfolio_page/custome_widgets/technologiesview.cpp
 
         #------ Resources ------
         images.qrc
