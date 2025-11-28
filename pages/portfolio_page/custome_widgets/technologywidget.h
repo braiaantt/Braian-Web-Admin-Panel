@@ -22,6 +22,7 @@ public:
 
     //------ Setters ------
     void setTechIcon(const QPixmap &pixmap);
+    void setSelected(bool state);
 
     //------ Config Methods ------
     void enableDeleteButton();
