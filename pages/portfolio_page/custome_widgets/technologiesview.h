@@ -2,6 +2,7 @@
 #define TECHNOLOGIESVIEW_H
 
 #include <QScrollArea>
+#include <QHBoxLayout>
 #include "technologywidget.h"
 
 class TechnologiesView : public QScrollArea
@@ -14,6 +15,8 @@ public:
     void setTechIcon(int techId, const QPixmap &pixmap);
 
 private:
+    QHBoxLayout *layout;
+
     //------ Helpers ------
     TechnologyWidget* fromWidget(QWidget *widget);
 };
