@@ -4,8 +4,8 @@
 #include "utils.h"
 #include "createtechnology.h"
 
-TechnologyHandler::TechnologyHandler(TechnologyService *technologyService, Mode mode, QWidget *parent)
-    : QDialog(parent), technologyService(technologyService), mode(mode)
+TechnologyHandler::TechnologyHandler(TechnologyService *technologyService, QWidget *parent)
+    : QDialog(parent), technologyService(technologyService)
     , ui(new Ui::TechnologyHandler)
 {
     ui->setupUi(this);
@@ -21,6 +21,7 @@ TechnologyHandler::~TechnologyHandler()
 
 void TechnologyHandler::init()
 {
+    ui->scrollAreaTechnologies->init();
     connectSignalsAndSlots();
     technologyService->getTechnologies();
 }
@@ -42,7 +43,7 @@ void TechnologyHandler::setTechnologies(const QVector<Technology> &technologies)
 
         //Create and initializate
         TechnologyWidget *widget = new TechnologyWidget(nullptr, tech);
-        mode == Mode::Read ? widget->enableRadioButton() : widget->enableDeleteButton();
+        widget->enableDeleteButton();
         connect(widget, &TechnologyWidget::deleteTechnology, this, &TechnologyHandler::deleteTechnology);
 
         //Get image from server
@@ -65,7 +66,7 @@ void TechnologyHandler::techCreated(int techId)
     //Create and initializate
     TechnologyWidget *widget = new TechnologyWidget(nullptr, cacheTech);
     widget->setTechIcon(QPixmap(cacheTech.getImgPath()));
-    mode == Mode::Read ? widget->enableRadioButton() : widget->enableDeleteButton();
+    widget->enableDeleteButton();
     connect(widget, &TechnologyWidget::deleteTechnology, this, &TechnologyHandler::deleteTechnology);
 
     //Add widget
