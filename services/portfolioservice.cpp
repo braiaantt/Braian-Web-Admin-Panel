@@ -5,8 +5,9 @@
 #include <QPixmap>
 #include "networkutils.h"
 
-PortfolioService::PortfolioService(ApiClient *apiClient) :
-    apiClient(apiClient)
+PortfolioService::PortfolioService(ApiClient *apiClient, QObject *parent) :
+    QObject(parent)
+    , apiClient(apiClient)
 {
     //Important delete reply after finished, autoDeleteReply desactivated at ApiClient initialization
 }

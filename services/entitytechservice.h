@@ -9,7 +9,7 @@ class EntityTechService : public QObject
 {
     Q_OBJECT
 public:
-    EntityTechService(ApiClient *apiClient);
+    EntityTechService(ApiClient *apiClient, QObject *parent = nullptr);
 
     void addRelation(int entityId, const QString &entityType, int techId);
     void removeRelation(int entityId, const QString &entityType, int techId);

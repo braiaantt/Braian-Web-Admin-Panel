@@ -5,8 +5,9 @@
 #include <QJsonValue>
 #include "networkutils.h"
 
-EntityTechService::EntityTechService(ApiClient *apiClient) :
-    apiClient(apiClient)
+EntityTechService::EntityTechService(ApiClient *apiClient, QObject *parent)
+    : QObject(parent)
+    , apiClient(apiClient)
 {
 
 }

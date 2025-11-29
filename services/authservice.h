@@ -9,7 +9,7 @@ class AuthService : public QObject
     Q_OBJECT
 
 public:
-    AuthService(ApiClient *apiClient);
+    AuthService(ApiClient *apiClient, QObject *parent = nullptr);
 
     void login(const QString &email, const QString &password);
 

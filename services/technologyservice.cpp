@@ -6,8 +6,9 @@
 #include <QPixmap>
 #include <QFile>
 
-TechnologyService::TechnologyService(ApiClient *apiClient) :
-    apiClient(apiClient)
+TechnologyService::TechnologyService(ApiClient *apiClient, QObject *parent) :
+    QObject(parent)
+    , apiClient(apiClient)
 {
 
 }

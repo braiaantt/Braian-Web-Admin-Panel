@@ -10,7 +10,7 @@ class PortfolioService : public QObject
 {
     Q_OBJECT
 public:
-    PortfolioService(ApiClient *apiClient);
+    PortfolioService(ApiClient *apiClient, QObject *parent = nullptr);
 
     void getPortfolio();
 

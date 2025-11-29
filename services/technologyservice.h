@@ -10,7 +10,7 @@ class TechnologyService : public QObject
 {
     Q_OBJECT
 public:
-    TechnologyService(ApiClient *apiClient);
+    TechnologyService(ApiClient *apiClient, QObject *parent = nullptr);
 
     void addTechnology(const Technology &tech);
     void getTechIcon(int techId, const QString &path);

@@ -2,8 +2,9 @@
 #include <QJsonObject>
 #include "configmanager.h"
 
-AuthService::AuthService(ApiClient *apiClient):
-    apiClient(apiClient)
+AuthService::AuthService(ApiClient *apiClient, QObject *parent)
+    : QObject(parent)
+    , apiClient(apiClient)
 {
     //Important delete reply after finished, autoDeleteReply desactivated at ApiClient initialization
 }
