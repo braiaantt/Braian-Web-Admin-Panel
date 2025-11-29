@@ -39,6 +39,7 @@ void PortfolioPage::on_pushButtonAddTechnology_clicked()
     int entityId = 1;
     QString entityType = "portfolio";
     TechnologyRelation dialog(technologyService, entityTechService, entityId, entityType, this);
+    connect(&dialog, &TechnologyRelation::technologiesChanged, this, &PortfolioPage::refreshTechnologies);
     dialog.exec();
 }
 
@@ -97,6 +98,15 @@ void PortfolioPage::setUserPhoto(const QPixmap &pixmap)
 void PortfolioPage::techIconReceipt(int techId, const QPixmap &pixmap)
 {
     ui->scrollAreaTechnologies->setTechIcon(techId, pixmap);
+}
+
+void PortfolioPage::refreshTechnologies()
+{
+    /*
+    Future implementation with service provider to avoid
+    interferences between PortfolioPage and TechnologyRelation dialog,
+    because they use the same service to get technologies
+    */
 }
 
 void PortfolioPage::errorOcurred(const QString &message)
