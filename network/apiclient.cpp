@@ -49,6 +49,33 @@ QNetworkReply* ApiClient::deleteTechnology(int techId)
     return basicRequests->deleteResource(resourcePath, headers);
 }
 
+//-- Entity Technology --
+
+QNetworkReply* ApiClient::addTechRelation(const QByteArray &body)
+{
+    QMap<QByteArray,QByteArray> headers;
+    headers.insert("Authorization", ("Bearer " + accessToken).toUtf8());
+    headers.insert("Content-Type", "application/json");
+
+    return basicRequests->post(entityTechnologyEndpoint, body, headers);
+}
+
+QNetworkReply* ApiClient::removeTechRelation(const QString &queryParams)
+{
+    QMap<QByteArray,QByteArray> headers;
+    headers.insert("Authorization", ("Bearer " + accessToken).toUtf8());
+
+    return basicRequests->deleteResource(entityTechnologyEndpoint + queryParams, headers);
+}
+
+QNetworkReply* ApiClient::getRelations(const QString &queryParams)
+{
+    QMap<QByteArray,QByteArray> headers;
+    headers.insert("Authorization", ("Bearer " + accessToken).toUtf8());
+
+    return basicRequests->get(entityTechnologyEndpoint + queryParams, headers);
+}
+
 //-- Files --
 
 QNetworkReply* ApiClient::getImage(const QString &path)
@@ -81,6 +108,11 @@ void ApiClient::setImageEndpoint(const QString &endpoint)
 void ApiClient::setTechnologyEndpoint(const QString &endpoint)
 {
     technologyEndpoint = endpoint;
+}
+
+void ApiClient::setEntityTechnologyEndpoint(const QString &endpoint)
+{
+    entityTechnologyEndpoint = endpoint;
 }
 
 void ApiClient::setAccessToken(const QString &token){
