@@ -72,6 +72,7 @@ void TechnologyRelation::technologiesRelated(const QVector<Technology> &techsRel
 void TechnologyRelation::commitSuccess()
 {
     emit technologiesChanged();
+    accept();
 }
 
 void TechnologyRelation::errorOcurred(const QString &message)
@@ -102,6 +103,10 @@ void TechnologyRelation::on_pushButtonCommitChanges_clicked()
 
         if(wasSelected && !isSelected)
             toRemove.append(techId);
+    }
+
+    if(toAdd.isEmpty() && toRemove.isEmpty()){
+        accept();
     }
 
     for(int techId : toAdd) entityTechService->addRelation(entityId, entityType, techId);
