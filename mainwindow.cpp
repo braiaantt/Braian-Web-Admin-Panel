@@ -43,10 +43,10 @@ void MainWindow::initApiClient()
 
 void MainWindow::initServices()
 {
-    authService = new AuthService(&apiClient);
-    portfolioService = new PortfolioService(&apiClient);
-    technologyService = new TechnologyService(&apiClient);
-    entityTechService = new EntityTechService(&apiClient);
+    authService = new AuthService(&apiClient, this);
+    portfolioService = new PortfolioService(&apiClient, this);
+    technologyService = new TechnologyService(&apiClient, this);
+    entityTechService = new EntityTechService(&apiClient, this);
 }
 
 void MainWindow::initPages()
