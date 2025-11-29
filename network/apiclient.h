@@ -28,6 +28,9 @@ public:
     QNetworkReply* removeTechRelation(const QString &queryParams);
     QNetworkReply* getRelations(const QString &queryParams);
 
+    //-- Project --
+    QNetworkReply* postProject(QHttpMultiPart *multiPart);
+
     //-- Files --
     QNetworkReply* getImage(const QString &path);
 
@@ -38,6 +41,7 @@ public:
     void setImageEndpoint(const QString &photoEndpoint);
     void setTechnologyEndpoint(const QString &technologyEndpoint);
     void setEntityTechnologyEndpoint(const QString &entityTechnologyEndpoint);
+    void setProjectEndpoint(const QString &projectEndpoint);
     void setAccessToken(const QString &accesstoken);
     void setRefreshToken(const QString &refreshToken);
 
@@ -53,6 +57,7 @@ private:
     QString technologyEndpoint;
     QString imageEndpoint;
     QString entityTechnologyEndpoint;
+    QString projectEndpoint;
 };
 
 #endif // APICLIENT_H
