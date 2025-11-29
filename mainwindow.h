@@ -8,6 +8,7 @@
 #include "authservice.h"
 #include "portfolioservice.h"
 #include "technologyservice.h"
+#include "entitytechservice.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -38,6 +39,7 @@ private:
     AuthService *authService;
     PortfolioService *portfolioService;
     TechnologyService *technologyService;
+    EntityTechService *entityTechService;
 
     //------ Initialization ------
     void initApiClient();
