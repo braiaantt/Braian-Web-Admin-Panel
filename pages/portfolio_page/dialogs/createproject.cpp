@@ -3,8 +3,8 @@
 #include <QMessageBox>
 #include "utils.h"
 
-CreateProject::CreateProject(QWidget *parent)
-    : QDialog(parent)
+CreateProject::CreateProject(ProjectService *projectService, QWidget *parent)
+    : QDialog(parent), projectService(projectService)
     , ui(new Ui::CreateProject)
 {
     ui->setupUi(this);
@@ -21,6 +21,26 @@ CreateProject::~CreateProject()
 void CreateProject::init()
 {
     setWindowTitle("Crear Proyecto");
+    connectSignalsAndSlots();
+}
+
+void CreateProject::connectSignalsAndSlots()
+{
+    connect(projectService, &ProjectService::projectCreated, this, &CreateProject::projectCreated);
+    connect(projectService, &ProjectService::errorOcurred, this, &CreateProject::errorOcurred);
+}
+
+//------ Private Slots ------
+
+void CreateProject::projectCreated(int id)
+{
+    project.setId(id);
+    accept();
+}
+
+void CreateProject::errorOcurred(const QString &message)
+{
+    Utils::showWarning(this, message);
 }
 
 //------ UI Slots ------
@@ -44,8 +64,7 @@ void CreateProject::on_pushButtonAccept_clicked()
         return;
 
     setProjectValues(project);
-
-    accept();
+    projectService->createProject(project);
 }
 
 //------ Helpers ------
