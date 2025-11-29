@@ -2,11 +2,11 @@
 #include "ui_portfolioproject.h"
 
 PortfolioProject::PortfolioProject(QWidget *parent, const Project &project)
-    : QWidget(parent)
+    : QWidget(parent), project(project)
     , ui(new Ui::PortfolioProject)
 {
     ui->setupUi(this);
-    init(project);
+    init();
 }
 
 PortfolioProject::~PortfolioProject()
@@ -16,7 +16,7 @@ PortfolioProject::~PortfolioProject()
 
 //------ Initialization ------
 
-void PortfolioProject::init(const Project &project)
+void PortfolioProject::init()
 {
     if(!project.getCoverPath().isEmpty()){
         ui->labelImage->setPixmap(QPixmap(project.getCoverPath()));
@@ -24,4 +24,18 @@ void PortfolioProject::init(const Project &project)
 
     ui->labelTitle->setText(project.getName());
     ui->labelSmallAbout->setText(project.getSmallAbout());
+}
+
+//------ Setters ------
+
+void PortfolioProject::setCoverImage(const QPixmap &pixmap)
+{
+    ui->labelImage->setPixmap(pixmap);
+}
+
+//------ Getters ------
+
+const Project& PortfolioProject::getProject() const
+{
+    return project;
 }
