@@ -61,11 +61,12 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         pages/portfolio_page/dialogs/createtechnology.h pages/portfolio_page/dialogs/createtechnology.cpp pages/portfolio_page/dialogs/createtechnology.ui
         pages/portfolio_page/dialogs/createproject.h pages/portfolio_page/dialogs/createproject.cpp pages/portfolio_page/dialogs/createproject.ui
         pages/portfolio_page/dialogs/technologyhandler.h pages/portfolio_page/dialogs/technologyhandler.cpp pages/portfolio_page/dialogs/technologyhandler.ui
-
+        pages/portfolio_page/dialogs/technologyrelation.h pages/portfolio_page/dialogs/technologyrelation.cpp pages/portfolio_page/dialogs/technologyrelation.ui
         #------ Services ------
         services/authservice.h services/authservice.cpp
         services/portfolioservice.h services/portfolioservice.cpp
         services/technologyservice.h services/technologyservice.cpp
+        services/entitytechservice.h services/entitytechservice.cpp
 
         #------ Utils ------
         utils/utils.h utils/utils.cpp
