@@ -25,6 +25,7 @@ public:
 private slots:
     void setPortfolio(const Portfolio &portfolio);
     void setUserPhoto(const QPixmap &pixmap);
+    void techIconReceipt(int techId, const QPixmap &pixmap);
     void errorOcurred(const QString &message);
 
     //------ UI Slots ------
@@ -44,6 +45,9 @@ private:
 
     //------ Initialization ------
     void connectSignalsAndSlots();
+
+    //------ Helpers ------
+    void setTechnologyWidgets(const QVector<Technology> &techs);
 };
 
 #endif // PORTFOLIOPAGE_H
