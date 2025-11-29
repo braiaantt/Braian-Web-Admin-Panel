@@ -5,9 +5,12 @@
 #include "utils.h"
 #include "technologyhandler.h"
 #include "technologyrelation.h"
+#include "portfolioproject.h"
 
-PortfolioPage::PortfolioPage(PortfolioService *portfolioService, TechnologyService* technologyService, EntityTechService *entityTechService, QWidget *parent)
-    : QWidget(parent), portfolioService(portfolioService), technologyService(technologyService), entityTechService(entityTechService)
+PortfolioPage::PortfolioPage(PortfolioService *portfolioService, TechnologyService* technologyService,
+                             EntityTechService *entityTechService, ProjectService *projectService, QWidget *parent)
+    : QWidget(parent), portfolioService(portfolioService), technologyService(technologyService),
+    entityTechService(entityTechService), projectService(projectService)
     , ui(new Ui::PortfolioPage)
 {
     ui->setupUi(this);
@@ -30,6 +33,8 @@ void PortfolioPage::connectSignalsAndSlots()
     connect(technologyService, &TechnologyService::techIconReceipt, this, &PortfolioPage::techIconReceipt);
 
     connect(entityTechService, &EntityTechService::errorOcurred, this, &PortfolioPage::errorOcurred);
+
+    connect(projectService, &ProjectService::projectCoverReceipt, this, &PortfolioPage::projectCoverReceipt);
 }
 
 //------ UI Slots ------
@@ -45,7 +50,7 @@ void PortfolioPage::on_pushButtonAddTechnology_clicked()
 
 void PortfolioPage::on_pushButtonAddProject_clicked()
 {
-    CreateProject dialog(this);
+    CreateProject dialog(projectService, this);
     if(dialog.exec() == QDialog::Rejected) return;
 
     QHBoxLayout *layout = (QHBoxLayout*)ui->scrollAreaProjectWidgetContents->layout();
@@ -87,6 +92,7 @@ void PortfolioPage::setPortfolio(const Portfolio &portfolio)
     ui->lineEditProfession->setText(portfolio.getUserProfession());
     ui->plainTextAbout->appendPlainText(portfolio.getUserAbout());
     setTechnologyWidgets(portfolio.getTechnologies());
+    setProjectWidgets(portfolio.getProjects());
 }
 
 void PortfolioPage::setUserPhoto(const QPixmap &pixmap)
@@ -109,6 +115,20 @@ void PortfolioPage::refreshTechnologies()
     */
 }
 
+void PortfolioPage::projectCoverReceipt(int projectId, const QPixmap &pixmap)
+{
+    QHBoxLayout *layout = qobject_cast<QHBoxLayout*>(ui->scrollAreaProjectWidgetContents->layout());
+    if(!layout) return;
+
+    for(int i = 0; i<layout->count(); i++){
+        PortfolioProject *projectWidget = qobject_cast<PortfolioProject*>(layout->itemAt(i)->widget());
+        if(projectWidget && projectWidget->getProject().getId() == projectId){
+            projectWidget->setCoverImage(pixmap);
+            break;
+        }
+    }
+}
+
 void PortfolioPage::errorOcurred(const QString &message)
 {
     Utils::showWarning(this, message);
@@ -122,5 +142,17 @@ void PortfolioPage::setTechnologyWidgets(const QVector<Technology> &techs)
         TechnologyWidget *techWidget = new TechnologyWidget(nullptr, tech);
         technologyService->getTechIcon(tech.getId(), tech.getImgPath());
         ui->scrollAreaTechnologies->addTechnologyWidget(techWidget);
+    }
+}
+
+void PortfolioPage::setProjectWidgets(const QVector<Project> &projects)
+{
+    QHBoxLayout *layout = qobject_cast<QHBoxLayout*>(ui->scrollAreaProjectWidgetContents->layout());
+    if(!layout) return;
+
+    for(const Project &project : projects){
+        PortfolioProject *widget = new PortfolioProject(nullptr, project);
+        projectService->getProjectCover(project.getId(), project.getCoverPath());
+        layout->insertWidget(layout->count()-1, widget);
     }
 }
