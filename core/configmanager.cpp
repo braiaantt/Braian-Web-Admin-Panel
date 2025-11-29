@@ -46,6 +46,12 @@ QString ConfigManager::endpointImage() const
     return routesObj.value("image").toString();
 }
 
+QString ConfigManager::endpointEntityTechnology() const
+{
+    const QJsonObject routesObj = api.value("endpoints").toObject();
+    return routesObj.value("entityTechnology").toString();
+}
+
 //------ Persistent settings ------
 
 QSettings& ConfigManager::settings()
