@@ -1,14 +1,13 @@
 #include "portfoliopage.h"
 #include "ui_portfoliopage.h"
-#include "createtechnology.h"
 #include "createproject.h"
 #include "portfolioproject.h"
-#include "technologywidget.h"
 #include "utils.h"
 #include "technologyhandler.h"
+#include "technologyrelation.h"
 
-PortfolioPage::PortfolioPage(PortfolioService *portfolioService, TechnologyService* technologyService, QWidget *parent)
-    : QWidget(parent), portfolioService(portfolioService), technologyService(technologyService)
+PortfolioPage::PortfolioPage(PortfolioService *portfolioService, TechnologyService* technologyService, EntityTechService *entityTechService, QWidget *parent)
+    : QWidget(parent), portfolioService(portfolioService), technologyService(technologyService), entityTechService(entityTechService)
     , ui(new Ui::PortfolioPage)
 {
     ui->setupUi(this);
@@ -26,23 +25,18 @@ void PortfolioPage::connectSignalsAndSlots()
 {
     connect(portfolioService, &PortfolioService::portfolioReceipt, this, &PortfolioPage::setPortfolio);
     connect(portfolioService, &PortfolioService::errorOcurred, this, &PortfolioPage::errorOcurred);
+
+    connect(entityTechService, &EntityTechService::errorOcurred, this, &PortfolioPage::errorOcurred);
 }
 
 //------ UI Slots ------
 
 void PortfolioPage::on_pushButtonAddTechnology_clicked()
 {
-    CreateTechnology dialog(this);
-    if(dialog.exec() == QDialog::Rejected) return;
-
-    QHBoxLayout *layout = (QHBoxLayout*)ui->scrollAreaTechnologyWidgetContents->layout();
-    Technology technology = dialog.getTechnology();
-    TechnologyWidget *technologyWidget = new TechnologyWidget(nullptr, technology);
-    technologyWidget->setParent(ui->scrollAreaTechnologyWidgetContents); // to avoid memory leak warning
-
-    if(technologyWidget && layout){
-        layout->insertWidget(layout->count()-1, technologyWidget);
-    }
+    int entityId = 1;
+    QString entityType = "portfolio";
+    TechnologyRelation dialog(technologyService, entityTechService, entityId, entityType, this);
+    dialog.exec();
 }
 
 void PortfolioPage::on_pushButtonAddProject_clicked()
@@ -70,8 +64,8 @@ void PortfolioPage::on_pushButtonUpdatePhoto_clicked()
 
 void PortfolioPage::on_pushButtonHandleTechnologies_clicked()
 {
-    TechnologyHandler techHandler(technologyService, Mode::Delete, this);
-    techHandler.exec();
+    TechnologyHandler dialog(technologyService, this);
+    dialog.exec();
 }
 
 //------ Public Methods------
