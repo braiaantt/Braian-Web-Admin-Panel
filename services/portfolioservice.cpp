@@ -1,6 +1,7 @@
 #include "portfolioservice.h"
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QJsonValue>
 #include <QPixmap>
 #include "networkutils.h"
 
@@ -92,6 +93,29 @@ Portfolio PortfolioService::handlePortfolioFinished(const QByteArray &data)
     portfolio.setUserProfession(jsonPortfolio["user_profession"].toString());
     portfolio.setUserPhotoPath(jsonPortfolio["user_photo"].toString());
     portfolio.setUserAbout(jsonPortfolio["user_about"].toString());
+    portfolio.setTechnologies(getTechnologiesFromArray(jsonPortfolio["techs"].toArray()));
 
     return portfolio;
+}
+
+//------ Helpers ------
+
+QVector<Technology> PortfolioService::getTechnologiesFromArray(const QJsonArray &array)
+{
+    QVector<Technology> techs;
+
+    for(const QJsonValue &value : array){
+        if(!value.isObject()) continue;
+
+        QJsonObject obj = value.toObject();
+        int techId = obj["id"].toInt();
+        QString name = obj["name"].toString();
+        QString iconSrc = obj["icon_src"].toString();
+
+        Technology tech(techId, name, iconSrc);
+        techs.append(tech);
+
+    }
+
+    return techs;
 }
