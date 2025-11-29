@@ -67,6 +67,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         services/portfolioservice.h services/portfolioservice.cpp
         services/technologyservice.h services/technologyservice.cpp
         services/entitytechservice.h services/entitytechservice.cpp
+        services/projectservice.h services/projectservice.cpp
 
         #------ Utils ------
         utils/utils.h utils/utils.cpp
