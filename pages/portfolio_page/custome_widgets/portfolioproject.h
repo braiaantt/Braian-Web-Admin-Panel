@@ -16,11 +16,18 @@ public:
     explicit PortfolioProject(QWidget *parent = nullptr, const Project &project = Project());
     ~PortfolioProject();
 
+    //------ Setters ------
+    void setCoverImage(const QPixmap &pixmap);
+
+    //------ Getters ------
+    const Project& getProject() const;
+
 private:
     Ui::PortfolioProject *ui;
+    Project project;
 
     //------ Initialization ------
-    void init(const Project &project);
+    void init();
 };
 
 #endif // PORTFOLIOPROJECT_H
