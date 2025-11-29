@@ -38,6 +38,7 @@ void MainWindow::initApiClient()
     apiClient.setPortfolioEndpoint(config.endpointPortfolio());
     apiClient.setTechnologyEndpoint(config.endpointTechnology());
     apiClient.setImageEndpoint(config.endpointImage());
+    apiClient.setEntityTechnologyEndpoint(config.endpointEntityTechnology());
 }
 
 void MainWindow::initServices()
@@ -45,6 +46,7 @@ void MainWindow::initServices()
     authService = new AuthService(&apiClient);
     portfolioService = new PortfolioService(&apiClient);
     technologyService = new TechnologyService(&apiClient);
+    entityTechService = new EntityTechService(&apiClient);
 }
 
 void MainWindow::initPages()
@@ -52,7 +54,7 @@ void MainWindow::initPages()
     QHash<QString, QWidget*> pages;
 
     loginPage = new LoginPage(authService, this);
-    portfolioPage = new PortfolioPage(portfolioService, technologyService, this);
+    portfolioPage = new PortfolioPage(portfolioService, technologyService, entityTechService, this);
 
     pages.insert(PageName::LOGIN, loginPage);
     pages.insert(PageName::PORTFOLIO, portfolioPage);
