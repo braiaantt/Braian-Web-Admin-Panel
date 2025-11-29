@@ -12,6 +12,7 @@ PortfolioPage::PortfolioPage(PortfolioService *portfolioService, TechnologyServi
 {
     ui->setupUi(this);
     connectSignalsAndSlots();
+    ui->scrollAreaTechnologies->init();
 }
 
 PortfolioPage::~PortfolioPage()
@@ -25,6 +26,8 @@ void PortfolioPage::connectSignalsAndSlots()
 {
     connect(portfolioService, &PortfolioService::portfolioReceipt, this, &PortfolioPage::setPortfolio);
     connect(portfolioService, &PortfolioService::errorOcurred, this, &PortfolioPage::errorOcurred);
+
+    connect(technologyService, &TechnologyService::techIconReceipt, this, &PortfolioPage::techIconReceipt);
 
     connect(entityTechService, &EntityTechService::errorOcurred, this, &PortfolioPage::errorOcurred);
 }
@@ -82,6 +85,7 @@ void PortfolioPage::setPortfolio(const Portfolio &portfolio)
     ui->lineEditName->setText(portfolio.getUserName());
     ui->lineEditProfession->setText(portfolio.getUserProfession());
     ui->plainTextAbout->appendPlainText(portfolio.getUserAbout());
+    setTechnologyWidgets(portfolio.getTechnologies());
 }
 
 void PortfolioPage::setUserPhoto(const QPixmap &pixmap)
@@ -90,7 +94,23 @@ void PortfolioPage::setUserPhoto(const QPixmap &pixmap)
     ui->labelPhoto->setPixmap(rounded);
 }
 
+void PortfolioPage::techIconReceipt(int techId, const QPixmap &pixmap)
+{
+    ui->scrollAreaTechnologies->setTechIcon(techId, pixmap);
+}
+
 void PortfolioPage::errorOcurred(const QString &message)
 {
     Utils::showWarning(this, message);
+}
+
+//------ Helpers ------
+
+void PortfolioPage::setTechnologyWidgets(const QVector<Technology> &techs)
+{
+    for(const Technology &tech : techs){
+        TechnologyWidget *techWidget = new TechnologyWidget(nullptr, tech);
+        technologyService->getTechIcon(tech.getId(), tech.getImgPath());
+        ui->scrollAreaTechnologies->addTechnologyWidget(techWidget);
+    }
 }
