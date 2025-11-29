@@ -32,16 +32,8 @@ void TechnologyRelation::connectSignalsAndSlots()
     connect(technologyService, &TechnologyService::techIconReceipt, this, &TechnologyRelation::setTechIcon);
     connect(technologyService, &TechnologyService::errorOcurred, this, &TechnologyRelation::errorOcurred);
 
+    connect(entityTechService, &EntityTechService::technologiesRelated, this, &TechnologyRelation::technologiesRelated);
     connect(entityTechService, &EntityTechService::commitSuccess, this, &TechnologyRelation::commitSuccess);
-}
-
-//------ Public Slots ------
-
-void TechnologyRelation::setEntityTechnologies(const QVector<Technology> &techs)
-{
-    for(const Technology &tech : techs){
-        ui->scrollAreaTechnologies->selectTechnology(tech.getId());
-    }
 }
 
 //------ Private Slots ------
@@ -60,6 +52,9 @@ void TechnologyRelation::setTechnologies(const QVector<Technology> &technologies
         //Add widget
         ui->scrollAreaTechnologies->addTechnologyWidget(widget);
     }
+
+    //Get related technologies
+    entityTechService->getRelations(entityId, entityType);
 }
 
 void TechnologyRelation::setTechIcon(int techId, const QPixmap &pixmap)
@@ -67,14 +62,21 @@ void TechnologyRelation::setTechIcon(int techId, const QPixmap &pixmap)
     ui->scrollAreaTechnologies->setTechIcon(techId, pixmap);
 }
 
-void TechnologyRelation::errorOcurred(const QString &message)
+void TechnologyRelation::technologiesRelated(const QVector<Technology> &techsRelated)
 {
-    Utils::showWarning(this, message);
+    for(const Technology &tech : techsRelated){
+        ui->scrollAreaTechnologies->selectTechnology(tech.getId());
+    }
 }
 
 void TechnologyRelation::commitSuccess()
 {
     emit technologiesChanged();
+}
+
+void TechnologyRelation::errorOcurred(const QString &message)
+{
+    Utils::showWarning(this, message);
 }
 
 //------ UI Slots ------

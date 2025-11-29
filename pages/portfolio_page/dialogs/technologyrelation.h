@@ -18,12 +18,11 @@ public:
                                 int entityId, const QString &entityType, QWidget *parent = nullptr);
     ~TechnologyRelation();
 
-    void setEntityTechnologies(const QVector<Technology> &techs);
-
 private slots:
     void setTechnologies(const QVector<Technology> &technologies);
     void setTechIcon(int techId, const QPixmap &pixmap);
     void commitSuccess();
+    void technologiesRelated(const QVector<Technology> &techsRelated);
     void errorOcurred(const QString &message);
 
     //------ UI Slots ------
