@@ -2,6 +2,7 @@
 #define PORTFOLIOSERVICE_H
 
 #include <QObject>
+#include <QJsonArray>
 #include "apiclient.h"
 #include "portfolio.h"
 
@@ -30,6 +31,9 @@ private:
 
     //------ Request Handlers ------
     Portfolio handlePortfolioFinished(const QByteArray &data);
+
+    //------ Helpers ------
+    QVector<Technology> getTechnologiesFromArray(const QJsonArray &array);
 
 };
 
