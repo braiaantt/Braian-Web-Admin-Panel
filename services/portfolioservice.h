@@ -34,7 +34,7 @@ private:
 
     //------ Helpers ------
     QVector<Technology> getTechnologiesFromArray(const QJsonArray &array);
-
+    QVector<Project> getProjectsFromArray(const QJsonArray &array);
 };
 
 #endif // PORTFOLIOSERVICE_H
