@@ -5,11 +5,6 @@
 #include "technology.h"
 #include "technologyservice.h"
 
-enum class Mode{
-    Read,
-    Delete
-};
-
 namespace Ui {
 class TechnologyHandler;
 }
@@ -19,7 +14,7 @@ class TechnologyHandler : public QDialog
     Q_OBJECT
 
 public:
-    explicit TechnologyHandler(TechnologyService* technologyService, Mode mode, QWidget *parent = nullptr);
+    explicit TechnologyHandler(TechnologyService* technologyService, QWidget *parent = nullptr);
     ~TechnologyHandler();
 
 private slots:
@@ -37,7 +32,6 @@ private:
     Ui::TechnologyHandler *ui;
     TechnologyService *technologyService;
     Technology cacheTech;
-    Mode mode;
 
     //------ Initialization ------
     void init();
