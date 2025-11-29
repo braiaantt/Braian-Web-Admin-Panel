@@ -95,6 +95,7 @@ Portfolio PortfolioService::handlePortfolioFinished(const QByteArray &data)
     portfolio.setUserPhotoPath(jsonPortfolio["user_photo"].toString());
     portfolio.setUserAbout(jsonPortfolio["user_about"].toString());
     portfolio.setTechnologies(getTechnologiesFromArray(jsonPortfolio["techs"].toArray()));
+    portfolio.setProjects(getProjectsFromArray(jsonPortfolio["projects"].toArray()));
 
     return portfolio;
 }
@@ -119,4 +120,26 @@ QVector<Technology> PortfolioService::getTechnologiesFromArray(const QJsonArray 
     }
 
     return techs;
+}
+
+QVector<Project> PortfolioService::getProjectsFromArray(const QJsonArray &array)
+{
+    QVector<Project> projects;
+
+    for(const QJsonValue &value : array){
+        if(!value.isObject()) continue;
+
+        QJsonObject obj = value.toObject();
+        int projectId = obj["id"].toInt();
+        QString name = obj["name"].toString();
+        QString smallAbout = obj["small_about"].toString();
+        QString bigAbout = obj["big_about"].toString();
+        QString userComment = obj["user_comment"].toString();
+        QString coverSrc = obj["cover_src"].toString();
+
+        Project project(projectId, name, smallAbout, bigAbout, userComment, coverSrc);
+        projects.append(project);
+    }
+
+    return projects;
 }
