@@ -4,6 +4,7 @@
 #include <QWidget>
 #include "portfolioservice.h"
 #include "technologyservice.h"
+#include "entitytechservice.h"
 #include "portfolio.h"
 
 namespace Ui {
@@ -15,7 +16,8 @@ class PortfolioPage : public QWidget
     Q_OBJECT
 
 public:
-    explicit PortfolioPage(PortfolioService *portfolioService, TechnologyService *technologyService, QWidget *parent = nullptr);
+    explicit PortfolioPage(PortfolioService *portfolioService, TechnologyService *technologyService, EntityTechService *entityTechService,
+                           QWidget *parent = nullptr);
     ~PortfolioPage();
 
     void loadPortfolio();
@@ -38,6 +40,7 @@ private:
     Ui::PortfolioPage *ui;
     PortfolioService *portfolioService;
     TechnologyService *technologyService;
+    EntityTechService *entityTechService;
 
     //------ Initialization ------
     void connectSignalsAndSlots();
