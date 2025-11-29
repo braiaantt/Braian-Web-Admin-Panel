@@ -76,6 +76,16 @@ QNetworkReply* ApiClient::getRelations(const QString &queryParams)
     return basicRequests->get(entityTechnologyEndpoint + queryParams, headers);
 }
 
+//-- Project --
+
+QNetworkReply* ApiClient::postProject(QHttpMultiPart *multiPart)
+{
+    QMap<QByteArray,QByteArray> headers;
+    headers.insert("Authorization", ("Bearer " + accessToken).toUtf8());
+
+    return basicRequests->postMultipart(projectEndpoint, multiPart, headers);
+}
+
 //-- Files --
 
 QNetworkReply* ApiClient::getImage(const QString &path)
@@ -113,6 +123,10 @@ void ApiClient::setTechnologyEndpoint(const QString &endpoint)
 void ApiClient::setEntityTechnologyEndpoint(const QString &endpoint)
 {
     entityTechnologyEndpoint = endpoint;
+}
+
+void ApiClient::setProjectEndpoint(const QString &endpoint){
+    projectEndpoint = endpoint;
 }
 
 void ApiClient::setAccessToken(const QString &token){
