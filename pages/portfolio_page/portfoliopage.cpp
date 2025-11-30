@@ -56,10 +56,13 @@ void PortfolioPage::on_pushButtonAddProject_clicked()
     QHBoxLayout *layout = (QHBoxLayout*)ui->scrollAreaProjectWidgetContents->layout();
     Project project = dialog.getProject();
     PortfolioProject *projectWidget = new PortfolioProject(nullptr, project);
-    projectWidget->setParent(ui->scrollAreaProjectWidgetContents); // to avoid memory leak warning
 
     if(projectWidget && layout){
         layout->insertWidget(layout->count()-1, projectWidget);
+        projectWidget->setParent(ui->scrollAreaProjectWidgetContents); // to avoid memory leak warning
+        connect(projectWidget, &PortfolioProject::goToProject, this, &PortfolioPage::goToProject);
+    } else {
+        projectWidget->deleteLater();
     }
 }
 
@@ -129,6 +132,11 @@ void PortfolioPage::projectCoverReceipt(int projectId, const QPixmap &pixmap)
     }
 }
 
+void PortfolioPage::goToProject(const Project &project)
+{
+    emit projectClicked(project);
+}
+
 void PortfolioPage::errorOcurred(const QString &message)
 {
     Utils::showWarning(this, message);
@@ -154,5 +162,6 @@ void PortfolioPage::setProjectWidgets(const QVector<Project> &projects)
         PortfolioProject *widget = new PortfolioProject(nullptr, project);
         projectService->getProjectCover(project.getId(), project.getCoverPath());
         layout->insertWidget(layout->count()-1, widget);
+        connect(widget, &PortfolioProject::goToProject, this, &PortfolioPage::goToProject);
     }
 }
