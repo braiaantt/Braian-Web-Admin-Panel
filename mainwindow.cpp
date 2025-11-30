@@ -75,6 +75,8 @@ void MainWindow::initPages()
 void MainWindow::connectSignalsAndSlots()
 {
     connect(loginPage, &LoginPage::loginComplete, this, &MainWindow::loginComplete);
+
+    connect(portfolioPage, &PortfolioPage::projectClicked, this, &MainWindow::projectClicked);
 }
 
 //------ Private Slots ------
@@ -89,4 +91,31 @@ void MainWindow::loginComplete()
 
     portfolioPage->loadPortfolio();
     ui->stackedWidgetPages->setCurrentWidget(page);
+}
+
+void MainWindow::projectClicked(const Project &project)
+{
+    ProjectPage *projectPage = new ProjectPage(technologyService, entityTechService, project, this);
+
+    QWidget* stackedWidgetPage = ui->stackedWidgetPages->findChild<QWidget*>(PageName::PROJECT);
+    if(stackedWidgetPage && stackedWidgetPage->layout()){
+        connect(projectPage, &ProjectPage::backToPortfolio, this, &MainWindow::backToPortfolioPage);
+        stackedWidgetPage->layout()->addWidget(projectPage);
+        ui->stackedWidgetPages->setCurrentWidget(stackedWidgetPage);
+    } else {
+        projectPage->deleteLater();
+    }
+}
+
+void MainWindow::backToPortfolioPage(ProjectPage *page)
+{
+    QWidget *stackedWidgetPage = ui->stackedWidgetPages->findChild<QWidget*>(PageName::PROJECT);
+    QLayout *layout = stackedWidgetPage->layout();
+    if(!layout) return;
+
+    layout->removeWidget(page);
+    page->deleteLater();
+
+    QWidget *widgetPortfolio= ui->stackedWidgetPages->findChild<QWidget*>(PageName::PORTFOLIO);
+    ui->stackedWidgetPages->setCurrentWidget(widgetPortfolio);
 }
