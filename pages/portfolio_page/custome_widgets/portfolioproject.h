@@ -22,6 +22,13 @@ public:
     //------ Getters ------
     const Project& getProject() const;
 
+signals:
+    void goToProject(const Project &project);
+
+private slots:
+    //------ UI Slots ------
+    void on_pushButtonGoToProject_clicked();
+
 private:
     Ui::PortfolioProject *ui;
     Project project;
