@@ -30,6 +30,7 @@ private slots:
     void techIconReceipt(int techId, const QPixmap &pixmap);
     void refreshTechnologies();
     void projectCoverReceipt(int projectId, const QPixmap &pixmap);
+    void goToProject(const Project &project);
     void errorOcurred(const QString &message);
 
     //------ UI Slots ------
@@ -40,6 +41,9 @@ private slots:
     void on_pushButtonUpdatePhoto_clicked();
 
     void on_pushButtonHandleTechnologies_clicked();
+
+signals:
+    void projectClicked(const Project &project);
 
 private:
     Ui::PortfolioPage *ui;
