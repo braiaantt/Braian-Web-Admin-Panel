@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include "loginpage.h"
 #include "portfoliopage.h"
+#include "projectpage.h"
 #include "apiclient.h"
 #include "authservice.h"
 #include "portfolioservice.h"
@@ -27,6 +28,8 @@ public:
 
 private slots:
     void loginComplete();
+    void projectClicked(const Project &project);
+    void backToPortfolioPage(ProjectPage *page);
 
 private:
     Ui::MainWindow *ui;
