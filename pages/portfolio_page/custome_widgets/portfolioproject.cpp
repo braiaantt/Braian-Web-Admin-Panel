@@ -39,3 +39,10 @@ const Project& PortfolioProject::getProject() const
 {
     return project;
 }
+
+//------ UI Slots ------
+
+void PortfolioProject::on_pushButtonGoToProject_clicked()
+{
+    emit goToProject(project);
+}
