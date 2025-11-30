@@ -47,7 +47,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
 
         #------ Pages ------
         pages/portfolio_page/portfoliopage.h pages/portfolio_page/portfoliopage.cpp pages/portfolio_page/portfoliopage.ui
-        pages/login_page/loginpage.h pages/login_page/loginpage.cpp pages/login_page/loginpage.ui
+        pages/login_page/loginpage.h pages/login_page/loginpage.cpp pages/login_page/loginpage.cpp
+        pages/project_page/projectpage.h pages/project_page/projectpage.cpp pages/project_page/projectpage.ui
 
         #------ Custome Widgets ------
         pages/portfolio_page/custome_widgets/portfolioproject.h pages/portfolio_page/custome_widgets/portfolioproject.cpp pages/portfolio_page/custome_widgets/portfolioproject.ui
@@ -98,6 +99,7 @@ include_directories(
 
     pages/login_page
     pages/portfolio_page
+    pages/project_page
 
     pages/portfolio_page/custome_widgets
     pages/portfolio_page/dialogs
