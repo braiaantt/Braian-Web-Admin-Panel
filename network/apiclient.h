@@ -31,14 +31,14 @@ public:
     //-- Project --
     QNetworkReply* postProject(QHttpMultiPart *multiPart);
 
-    //-- Files --
+    //-- Static --
     QNetworkReply* getImage(const QString &path);
 
     //------ Setters ------
     void setHostName(const QString &hostName);
     void setLoginEndpoint(const QString &loginEndpoint);
     void setPortfolioEndpoint(const QString &portfolioEndpoint);
-    void setImageEndpoint(const QString &photoEndpoint);
+    void setStaticEndpoint(const QString &staticEndpoint);
     void setTechnologyEndpoint(const QString &technologyEndpoint);
     void setEntityTechnologyEndpoint(const QString &entityTechnologyEndpoint);
     void setProjectEndpoint(const QString &projectEndpoint);
@@ -55,7 +55,7 @@ private:
     QString loginEndpoint;
     QString portfolioEndpoint;
     QString technologyEndpoint;
-    QString imageEndpoint;
+    QString staticEndpoint;
     QString entityTechnologyEndpoint;
     QString projectEndpoint;
 };

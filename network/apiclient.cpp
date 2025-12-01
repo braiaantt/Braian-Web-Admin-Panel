@@ -90,8 +90,10 @@ QNetworkReply* ApiClient::postProject(QHttpMultiPart *multiPart)
 
 QNetworkReply* ApiClient::getImage(const QString &path)
 {
-    return basicRequests->get(imageEndpoint + path);
+    return basicRequests->get(staticEndpoint + path);
 }
+
+//-- Entity Images --
 
 //------ Setters ------
 
@@ -110,9 +112,9 @@ void ApiClient::setPortfolioEndpoint(const QString &endpoint)
     portfolioEndpoint = endpoint;
 }
 
-void ApiClient::setImageEndpoint(const QString &endpoint)
+void ApiClient::setStaticEndpoint(const QString &endpoint)
 {
-    imageEndpoint = endpoint;
+    staticEndpoint = endpoint;
 }
 
 void ApiClient::setTechnologyEndpoint(const QString &endpoint)
