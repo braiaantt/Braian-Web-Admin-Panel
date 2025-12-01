@@ -5,6 +5,7 @@
 #include "project.h"
 #include "technologyservice.h"
 #include "entitytechservice.h"
+#include "entityimageservice.h"
 
 namespace Ui {
 class ProjectPage;
@@ -15,7 +16,7 @@ class ProjectPage : public QWidget
     Q_OBJECT
 
 public:
-    explicit ProjectPage(TechnologyService *technologyService, EntityTechService *entityTechService,
+    explicit ProjectPage(TechnologyService *technologyService, EntityTechService *entityTechService, EntityImageService *entityImageService,
                          const Project &project, QWidget *parent = nullptr);
     ~ProjectPage();
 
@@ -28,6 +29,8 @@ private slots:
 
     void on_pushButtonAddTechnology_clicked();
 
+    void on_pushButtonHandleGallery_clicked();
+
 signals:
     void backToPortfolio(ProjectPage *page);
 
@@ -35,6 +38,7 @@ private:
     Ui::ProjectPage *ui;
     TechnologyService *technologyService;
     EntityTechService *entityTechService;
+    EntityImageService *entityImageService;
     Project project;
 
     //------ Initialization ------
