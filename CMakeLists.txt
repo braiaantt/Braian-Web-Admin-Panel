@@ -47,7 +47,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
 
         #------ Pages ------
         pages/portfolio_page/portfoliopage.h pages/portfolio_page/portfoliopage.cpp pages/portfolio_page/portfoliopage.ui
-        pages/login_page/loginpage.h pages/login_page/loginpage.cpp pages/login_page/loginpage.cpp
+        pages/login_page/loginpage.h pages/login_page/loginpage.cpp pages/login_page/loginpage.ui
         pages/project_page/projectpage.h pages/project_page/projectpage.cpp pages/project_page/projectpage.ui
 
         #------ Custome Widgets ------
