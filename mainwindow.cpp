@@ -37,8 +37,8 @@ void MainWindow::initApiClient()
     apiClient.setLoginEndpoint(config.endpointLogin());
     apiClient.setPortfolioEndpoint(config.endpointPortfolio());
     apiClient.setTechnologyEndpoint(config.endpointTechnology());
-    apiClient.setImageEndpoint(config.endpointImage());
     apiClient.setEntityTechnologyEndpoint(config.endpointEntityTechnology());
+    apiClient.setEntityImageEndpoint(config.endpointEntityImage());
     apiClient.setProjectEndpoint(config.endpointProject());
 }
 
@@ -49,6 +49,7 @@ void MainWindow::initServices()
     technologyService = new TechnologyService(&apiClient, this);
     entityTechService = new EntityTechService(&apiClient, this);
     projectService = new ProjectService(&apiClient, this);
+    entityImageService = new EntityImageService(&apiClient, this);
 }
 
 void MainWindow::initPages()
@@ -95,7 +96,7 @@ void MainWindow::loginComplete()
 
 void MainWindow::projectClicked(const Project &project)
 {
-    ProjectPage *projectPage = new ProjectPage(technologyService, entityTechService, project, this);
+    ProjectPage *projectPage = new ProjectPage(technologyService, entityTechService, entityImageService, project, this);
 
     QWidget* stackedWidgetPage = ui->stackedWidgetPages->findChild<QWidget*>(PageName::PROJECT);
     if(stackedWidgetPage && stackedWidgetPage->layout()){
