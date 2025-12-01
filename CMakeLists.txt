@@ -42,6 +42,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         models/project.h models/project.cpp
         models/technology.h models/technology.cpp
 
+
         #------ Network ------
         network/apiclient.h network/apiclient.cpp
 
@@ -54,6 +55,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         pages/portfolio_page/custome_widgets/portfolioproject.h pages/portfolio_page/custome_widgets/portfolioproject.cpp pages/portfolio_page/custome_widgets/portfolioproject.ui
         pages/portfolio_page/custome_widgets/technologywidget.h pages/portfolio_page/custome_widgets/technologywidget.cpp pages/portfolio_page/custome_widgets/technologywidget.ui
         pages/portfolio_page/custome_widgets/technologiesview.h pages/portfolio_page/custome_widgets/technologiesview.cpp
+        pages/project_page/custome_widgets/imagewidget.h pages/project_page/custome_widgets/imagewidget.cpp pages/project_page/custome_widgets/imagewidget.ui
 
         #------ Resources ------
         images.qrc
@@ -63,12 +65,15 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         pages/portfolio_page/dialogs/createproject.h pages/portfolio_page/dialogs/createproject.cpp pages/portfolio_page/dialogs/createproject.ui
         pages/portfolio_page/dialogs/technologyhandler.h pages/portfolio_page/dialogs/technologyhandler.cpp pages/portfolio_page/dialogs/technologyhandler.ui
         pages/portfolio_page/dialogs/technologyrelation.h pages/portfolio_page/dialogs/technologyrelation.cpp pages/portfolio_page/dialogs/technologyrelation.ui
+        pages/project_page/dialogs/handleimages.h pages/project_page/dialogs/handleimages.cpp pages/project_page/dialogs/handleimages.ui
+
         #------ Services ------
         services/authservice.h services/authservice.cpp
         services/portfolioservice.h services/portfolioservice.cpp
         services/technologyservice.h services/technologyservice.cpp
         services/entitytechservice.h services/entitytechservice.cpp
         services/projectservice.h services/projectservice.cpp
+        services/entityimageservice.h services/entityimageservice.cpp
 
         #------ Utils ------
         utils/utils.h utils/utils.cpp
@@ -103,6 +108,9 @@ include_directories(
 
     pages/portfolio_page/custome_widgets
     pages/portfolio_page/dialogs
+
+    pages/project_page/custome_widgets
+    pages/project_page/dialogs
 
     services
     utils
