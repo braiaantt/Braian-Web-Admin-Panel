@@ -1,10 +1,11 @@
 #include "projectpage.h"
 #include "ui_projectpage.h"
 #include "technologyrelation.h"
+#include "handleimages.h"
 
 ProjectPage::ProjectPage(TechnologyService *technologyService, EntityTechService *entityTechService,
-                         const Project &project, QWidget *parent)
-    : QWidget(parent), technologyService(technologyService), entityTechService(entityTechService), project(project)
+                         EntityImageService *entityImageService, const Project &project, QWidget *parent)
+    : QWidget(parent), technologyService(technologyService), entityTechService(entityTechService), entityImageService(entityImageService), project(project)
     , ui(new Ui::ProjectPage)
 {
     ui->setupUi(this);
@@ -72,3 +73,11 @@ void ProjectPage::techIconReceipt(int techId, const QPixmap &pixmap)
 {
     ui->scrollAreaTechnologies->setTechIcon(techId, pixmap);
 }
+
+void ProjectPage::on_pushButtonHandleGallery_clicked()
+{
+    QString entityType = "project";
+    HandleImages dialog(entityImageService, project.getId(), entityType, this);
+    dialog.exec();;
+}
+
