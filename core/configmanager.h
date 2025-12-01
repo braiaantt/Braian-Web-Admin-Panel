@@ -14,8 +14,8 @@ public:
     QString endpointLogin() const;
     QString endpointPortfolio() const;
     QString endpointTechnology() const;
-    QString endpointImage() const;
     QString endpointEntityTechnology() const;
+    QString endpointEntityImage() const;
     QString endpointProject() const;
 
     //------ Persistent settings ------
