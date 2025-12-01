@@ -86,14 +86,38 @@ QNetworkReply* ApiClient::postProject(QHttpMultiPart *multiPart)
     return basicRequests->postMultipart(projectEndpoint, multiPart, headers);
 }
 
-//-- Files --
+//-- Static --
 
 QNetworkReply* ApiClient::getImage(const QString &path)
 {
-    return basicRequests->get(staticEndpoint + path);
+    return basicRequests->get(path);
 }
 
 //-- Entity Images --
+
+QNetworkReply* ApiClient::getEntityImagePaths(const QString &queryParams)
+{
+    QMap<QByteArray,QByteArray> headers;
+    headers.insert("Authorization", ("Bearer " + accessToken).toUtf8());
+
+    return basicRequests->get(entityImageEndpoint + queryParams, headers);
+}
+
+QNetworkReply *ApiClient::postEntityImage(QHttpMultiPart *multiPart)
+{
+    QMap<QByteArray,QByteArray> headers;
+    headers.insert("Authorization", ("Bearer " + accessToken).toUtf8());
+
+    return basicRequests->postMultipart(entityImageEndpoint, multiPart, headers);
+}
+
+QNetworkReply *ApiClient::deleteEntityImage(const QString &queryParams)
+{
+    QMap<QByteArray,QByteArray> headers;
+    headers.insert("Authorization", ("Bearer " + accessToken).toUtf8());
+
+    return basicRequests->deleteResource(entityImageEndpoint + queryParams, headers);
+}
 
 //------ Setters ------
 
@@ -112,11 +136,6 @@ void ApiClient::setPortfolioEndpoint(const QString &endpoint)
     portfolioEndpoint = endpoint;
 }
 
-void ApiClient::setStaticEndpoint(const QString &endpoint)
-{
-    staticEndpoint = endpoint;
-}
-
 void ApiClient::setTechnologyEndpoint(const QString &endpoint)
 {
     technologyEndpoint = endpoint;
@@ -125,6 +144,11 @@ void ApiClient::setTechnologyEndpoint(const QString &endpoint)
 void ApiClient::setEntityTechnologyEndpoint(const QString &endpoint)
 {
     entityTechnologyEndpoint = endpoint;
+}
+
+void ApiClient::setEntityImageEndpoint(const QString &endpoint)
+{
+    entityImageEndpoint = endpoint;
 }
 
 void ApiClient::setProjectEndpoint(const QString &endpoint){
