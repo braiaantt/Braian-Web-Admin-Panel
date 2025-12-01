@@ -31,6 +31,11 @@ public:
     //-- Project --
     QNetworkReply* postProject(QHttpMultiPart *multiPart);
 
+    //-- Entity Images --
+    QNetworkReply *getEntityImagePaths(const QString &queryParams);
+    QNetworkReply *postEntityImage(QHttpMultiPart *multiPart);
+    QNetworkReply *deleteEntityImage(const QString &queryParams);
+
     //-- Static --
     QNetworkReply* getImage(const QString &path);
 
@@ -38,9 +43,9 @@ public:
     void setHostName(const QString &hostName);
     void setLoginEndpoint(const QString &loginEndpoint);
     void setPortfolioEndpoint(const QString &portfolioEndpoint);
-    void setStaticEndpoint(const QString &staticEndpoint);
     void setTechnologyEndpoint(const QString &technologyEndpoint);
     void setEntityTechnologyEndpoint(const QString &entityTechnologyEndpoint);
+    void setEntityImageEndpoint(const QString &entityImageEndpoint);
     void setProjectEndpoint(const QString &projectEndpoint);
     void setAccessToken(const QString &accesstoken);
     void setRefreshToken(const QString &refreshToken);
@@ -57,6 +62,7 @@ private:
     QString technologyEndpoint;
     QString staticEndpoint;
     QString entityTechnologyEndpoint;
+    QString entityImageEndpoint;
     QString projectEndpoint;
 };
 
