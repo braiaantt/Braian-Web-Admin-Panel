@@ -86,6 +86,15 @@ QNetworkReply* ApiClient::postProject(QHttpMultiPart *multiPart)
     return basicRequests->postMultipart(projectEndpoint, multiPart, headers);
 }
 
+QNetworkReply* ApiClient::getProjectFeatures(int projectId)
+{
+    QMap<QByteArray,QByteArray> headers;
+    headers.insert("Authorization", ("Bearer " + accessToken).toUtf8());
+    QString finalEndpoint = projectEndpoint + "/" +QString::number(projectId) + featuresEndpoint;
+
+    return basicRequests->get(finalEndpoint, headers);
+}
+
 //-- Static --
 
 QNetworkReply* ApiClient::getImage(const QString &path)
@@ -117,6 +126,25 @@ QNetworkReply *ApiClient::deleteEntityImage(const QString &queryParams)
     headers.insert("Authorization", ("Bearer " + accessToken).toUtf8());
 
     return basicRequests->deleteResource(entityImageEndpoint + queryParams, headers);
+}
+
+//-- Features --
+
+QNetworkReply* ApiClient::postFeature(const QByteArray &body)
+{
+    QMap<QByteArray,QByteArray> headers;
+    headers.insert("Authorization", ("Bearer " + accessToken).toUtf8());
+    headers.insert("Content-Type", "application/json");
+
+    return basicRequests->post(featuresEndpoint, body, headers);
+}
+
+QNetworkReply* ApiClient::deleteFeature(int featureId)
+{
+    QMap<QByteArray,QByteArray> headers;
+    headers.insert("Authorization", ("Bearer " + accessToken).toUtf8());
+
+    return basicRequests->deleteResource(featuresEndpoint + "/" + QString::number(featureId), headers);
 }
 
 //------ Setters ------
@@ -153,6 +181,10 @@ void ApiClient::setEntityImageEndpoint(const QString &endpoint)
 
 void ApiClient::setProjectEndpoint(const QString &endpoint){
     projectEndpoint = endpoint;
+}
+
+void ApiClient::setFeaturesEndpoint(const QString &endpoint){
+    featuresEndpoint = endpoint;
 }
 
 void ApiClient::setAccessToken(const QString &token){
