@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include "project.h"
+#include "servicefactory.h"
 #include "technologyservice.h"
 #include "entitytechservice.h"
 #include "entityimageservice.h"
@@ -16,8 +17,7 @@ class ProjectPage : public QWidget
     Q_OBJECT
 
 public:
-    explicit ProjectPage(TechnologyService *technologyService, EntityTechService *entityTechService, EntityImageService *entityImageService,
-                         const Project &project, QWidget *parent = nullptr);
+    explicit ProjectPage(ServiceFactory *factory, const Project &project, QWidget *parent = nullptr);
     ~ProjectPage();
 
 private slots:
@@ -42,7 +42,7 @@ private:
     Project project;
 
     //------ Initialization ------
-    void init();
+    void init(ServiceFactory *serviceFactory);
     void connectSignalsAndSlots();
 };
 

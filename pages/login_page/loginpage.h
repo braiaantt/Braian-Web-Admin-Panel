@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include "authservice.h"
+#include "servicefactory.h"
 
 namespace Ui {
 class LoginPage;
@@ -13,7 +14,7 @@ class LoginPage : public QWidget
     Q_OBJECT
 
 public:
-    explicit LoginPage(AuthService *authService, QWidget *parent = nullptr);
+    explicit LoginPage(ServiceFactory *factory, QWidget *parent = nullptr);
     ~LoginPage();
 
 signals:
@@ -32,6 +33,7 @@ private:
     AuthService *authService;
 
     //------ Initialization ------
+    void init(ServiceFactory *factory);
     void connectSignalsAndSlots();
 };
 

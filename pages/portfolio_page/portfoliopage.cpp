@@ -7,15 +7,12 @@
 #include "technologyrelation.h"
 #include "portfolioproject.h"
 
-PortfolioPage::PortfolioPage(PortfolioService *portfolioService, TechnologyService* technologyService,
-                             EntityTechService *entityTechService, ProjectService *projectService, QWidget *parent)
-    : QWidget(parent), portfolioService(portfolioService), technologyService(technologyService),
-    entityTechService(entityTechService), projectService(projectService)
+PortfolioPage::PortfolioPage(ServiceFactory *factory, QWidget *parent)
+    : QWidget(parent)
     , ui(new Ui::PortfolioPage)
 {
     ui->setupUi(this);
-    connectSignalsAndSlots();
-    ui->scrollAreaTechnologies->init();
+    init(factory);
 }
 
 PortfolioPage::~PortfolioPage()
@@ -24,6 +21,17 @@ PortfolioPage::~PortfolioPage()
 }
 
 //------ Initialization ------
+
+void PortfolioPage::init(ServiceFactory *factory)
+{
+    portfolioService = factory->makePortfolioService(this);
+    technologyService = factory->makeTechnologyService(this);
+    entityTechService = factory->makeEntityTechService(this);
+    projectService = factory->makeProjectService(this);
+
+    connectSignalsAndSlots();
+    ui->scrollAreaTechnologies->init();
+}
 
 void PortfolioPage::connectSignalsAndSlots()
 {
