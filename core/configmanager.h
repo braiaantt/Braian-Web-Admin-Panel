@@ -17,6 +17,7 @@ public:
     QString endpointEntityTechnology() const;
     QString endpointEntityImage() const;
     QString endpointProject() const;
+    QString endpointFeatures() const;
 
     //------ Persistent settings ------
     static QString refreshToken();
