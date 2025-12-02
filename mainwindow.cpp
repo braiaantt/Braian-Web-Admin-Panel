@@ -2,7 +2,6 @@
 #include "./ui_mainwindow.h"
 #include "page_names.h"
 #include "utils.h"
-#include "configmanager.h"
 #include <QTimer>
 
 MainWindow::MainWindow(QWidget *parent)
@@ -10,12 +9,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    QTimer::singleShot(50, this, [this]{
-        initApiClient();
-        initServices();
-        initPages();
-        connectSignalsAndSlots();
-    });
+    init();
 }
 
 MainWindow::~MainWindow()
@@ -25,39 +19,24 @@ MainWindow::~MainWindow()
 
 //------ Initialization ------
 
-void MainWindow::initApiClient()
+void MainWindow::init()
 {
-    ConfigManager config;
-    if(!config.load()){
-        Utils::showWarning(this, "Error al leer archivo de configuracion!");
-        return;
-    }
-
-    apiClient.setHostName(config.host());
-    apiClient.setLoginEndpoint(config.endpointLogin());
-    apiClient.setPortfolioEndpoint(config.endpointPortfolio());
-    apiClient.setTechnologyEndpoint(config.endpointTechnology());
-    apiClient.setEntityTechnologyEndpoint(config.endpointEntityTechnology());
-    apiClient.setEntityImageEndpoint(config.endpointEntityImage());
-    apiClient.setProjectEndpoint(config.endpointProject());
-}
-
-void MainWindow::initServices()
-{
-    authService = new AuthService(&apiClient, this);
-    portfolioService = new PortfolioService(&apiClient, this);
-    technologyService = new TechnologyService(&apiClient, this);
-    entityTechService = new EntityTechService(&apiClient, this);
-    projectService = new ProjectService(&apiClient, this);
-    entityImageService = new EntityImageService(&apiClient, this);
+    QTimer::singleShot(50, this, [this]{
+        if(!serviceFactory.init()){
+            Utils::showWarning(this, "Error Loading Config");
+            return;
+        }
+        initPages();
+        connectSignalsAndSlots();
+    });
 }
 
 void MainWindow::initPages()
 {
     QHash<QString, QWidget*> pages;
 
-    loginPage = new LoginPage(authService, this);
-    portfolioPage = new PortfolioPage(portfolioService, technologyService, entityTechService, projectService, this);
+    loginPage = new LoginPage(&serviceFactory, this);
+    portfolioPage = new PortfolioPage(&serviceFactory, this);
 
     pages.insert(PageName::LOGIN, loginPage);
     pages.insert(PageName::PORTFOLIO, portfolioPage);
@@ -96,7 +75,7 @@ void MainWindow::loginComplete()
 
 void MainWindow::projectClicked(const Project &project)
 {
-    ProjectPage *projectPage = new ProjectPage(technologyService, entityTechService, entityImageService, project, this);
+    ProjectPage *projectPage = new ProjectPage(&serviceFactory, project, this);
 
     QWidget* stackedWidgetPage = ui->stackedWidgetPages->findChild<QWidget*>(PageName::PROJECT);
     if(stackedWidgetPage && stackedWidgetPage->layout()){
