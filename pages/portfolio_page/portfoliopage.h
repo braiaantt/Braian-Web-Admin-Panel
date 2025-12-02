@@ -2,6 +2,7 @@
 #define PORTFOLIOPAGE_H
 
 #include <QWidget>
+#include "servicefactory.h"
 #include "portfolioservice.h"
 #include "technologyservice.h"
 #include "entitytechservice.h"
@@ -17,9 +18,7 @@ class PortfolioPage : public QWidget
     Q_OBJECT
 
 public:
-    explicit PortfolioPage(PortfolioService *portfolioService, TechnologyService *technologyService,
-                           EntityTechService *entityTechService, ProjectService *projectService,
-                           QWidget *parent = nullptr);
+    explicit PortfolioPage(ServiceFactory *serviceFactory, QWidget *parent = nullptr);
     ~PortfolioPage();
 
     void loadPortfolio();
@@ -47,12 +46,14 @@ signals:
 
 private:
     Ui::PortfolioPage *ui;
+    ServiceFactory *factory;
     PortfolioService *portfolioService;
     TechnologyService *technologyService;
     EntityTechService *entityTechService;
     ProjectService *projectService;
 
     //------ Initialization ------
+    void init();
     void connectSignalsAndSlots();
 
     //------ Helpers ------

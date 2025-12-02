@@ -3,9 +3,8 @@
 #include "technologyrelation.h"
 #include "handleimages.h"
 
-ProjectPage::ProjectPage(TechnologyService *technologyService, EntityTechService *entityTechService,
-                         EntityImageService *entityImageService, const Project &project, QWidget *parent)
-    : QWidget(parent), technologyService(technologyService), entityTechService(entityTechService), entityImageService(entityImageService), project(project)
+ProjectPage::ProjectPage(ServiceFactory *factory, const Project &project, QWidget *parent)
+    : QWidget(parent), factory(factory), project(project)
     , ui(new Ui::ProjectPage)
 {
     ui->setupUi(this);
@@ -21,6 +20,10 @@ ProjectPage::~ProjectPage()
 
 void ProjectPage::init()
 {
+    technologyService = factory->makeTechnologyService(this);
+    entityTechService = factory->makeEntityTechService(this);
+    entityImageService = factory->makeEntityImageService(this);
+
     ui->lineEditTitle->setText(project.getName());
     ui->plainTextEditSmallAbout->setPlainText(project.getSmallAbout());
     ui->plainTextEditBigAbout->setPlainText(project.getBigAbout());

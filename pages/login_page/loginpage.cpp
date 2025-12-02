@@ -2,14 +2,13 @@
 #include "ui_loginpage.h"
 #include "utils.h"
 
-LoginPage::LoginPage(AuthService *authService, QWidget *parent)
+LoginPage::LoginPage(ServiceFactory *factory, QWidget *parent)
     :
-    ui(new Ui::LoginPage),
-    authService(authService),
+    ui(new Ui::LoginPage), factory(factory),
     QWidget(parent)
 {
     ui->setupUi(this);
-    connectSignalsAndSlots();
+    init();
 }
 
 LoginPage::~LoginPage()
@@ -18,6 +17,12 @@ LoginPage::~LoginPage()
 }
 
 //------ Initialization ------
+
+void LoginPage::init()
+{
+    authService = factory->makeAuthService(this);
+    connectSignalsAndSlots();
+}
 
 void LoginPage::connectSignalsAndSlots()
 {
