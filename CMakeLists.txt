@@ -41,7 +41,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         models/portfolio.h models/portfolio.cpp
         models/project.h models/project.cpp
         models/technology.h models/technology.cpp
-
+        models/feature.h models/feature.cpp
 
         #------ Network ------
         network/apiclient.h network/apiclient.cpp
@@ -66,6 +66,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         pages/portfolio_page/dialogs/technologyhandler.h pages/portfolio_page/dialogs/technologyhandler.cpp pages/portfolio_page/dialogs/technologyhandler.ui
         pages/portfolio_page/dialogs/technologyrelation.h pages/portfolio_page/dialogs/technologyrelation.cpp pages/portfolio_page/dialogs/technologyrelation.ui
         pages/project_page/dialogs/handleimages.h pages/project_page/dialogs/handleimages.cpp pages/project_page/dialogs/handleimages.ui
+        pages/project_page/dialogs/featureshandler.h pages/project_page/dialogs/featureshandler.cpp pages/project_page/dialogs/featureshandler.ui
 
         #------ Services ------
         services/authservice.h services/authservice.cpp
@@ -75,6 +76,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         services/projectservice.h services/projectservice.cpp
         services/entityimageservice.h services/entityimageservice.cpp
         services/factory/servicefactory.h services/factory/servicefactory.cpp
+        services/featureservice.h services/featureservice.cpp
 
         #------ Utils ------
         utils/utils.h utils/utils.cpp
