@@ -5,13 +5,7 @@
 #include "loginpage.h"
 #include "portfoliopage.h"
 #include "projectpage.h"
-#include "apiclient.h"
-#include "authservice.h"
-#include "portfolioservice.h"
-#include "technologyservice.h"
-#include "entitytechservice.h"
-#include "projectservice.h"
-#include "entityimageservice.h"
+#include "servicefactory.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -34,23 +28,14 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    ApiClient apiClient;
+    ServiceFactory serviceFactory;
 
     //------ Pages ------
     LoginPage *loginPage;
     PortfolioPage *portfolioPage;
 
-    //------ Services ------
-    AuthService *authService;
-    PortfolioService *portfolioService;
-    TechnologyService *technologyService;
-    EntityTechService *entityTechService;
-    ProjectService *projectService;
-    EntityImageService *entityImageService;
-
     //------ Initialization ------
-    void initApiClient();
-    void initServices();
+    void init();
     void initPages();
     void connectSignalsAndSlots();
 };
