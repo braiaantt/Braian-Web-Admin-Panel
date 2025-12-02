@@ -6,6 +6,7 @@
 #include <QJsonDocument>
 #include "apiclient.h"
 #include "project.h"
+#include "feature.h"
 
 class ProjectService : public QObject
 {
@@ -15,14 +16,17 @@ public:
 
     void createProject(const Project &project);
     void getProjectCover(int projectId, const QString &coverSrc);
+    void getProjectFeatures(int projectId);
 
 private slots:
     void createProjectFinished();
     void getProjectCoverFinished();
+    void getProjectFeaturesFinished();
 
 signals:
     void projectCreated(int projectId);
     void projectCoverReceipt(int projectId, const QPixmap &pixmap);
+    void projectFeaturesReceipt(const QVector<Feature> &feats);
     void errorOcurred(const QString &message);
 
 private:
@@ -34,6 +38,7 @@ private:
 
     //------ Reply Handlers ------
     int handleCreateProject(const QByteArray &data);
+    void handleProjectFeaturesReceipt(QVector<Feature> &container, const QByteArray &data);
 
 };
 
