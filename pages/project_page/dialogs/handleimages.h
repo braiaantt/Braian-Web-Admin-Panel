@@ -2,6 +2,7 @@
 #define HANDLEIMAGES_H
 
 #include <QDialog>
+#include "servicefactory.h"
 #include "entityimageservice.h"
 
 namespace Ui {
@@ -13,7 +14,7 @@ class HandleImages : public QDialog
     Q_OBJECT
 
 public:
-    explicit HandleImages(EntityImageService *entityImageService, int entityId, const QString &entityType, QWidget *parent = nullptr);
+    explicit HandleImages(ServiceFactory *factory, int projectId, QWidget *parent = nullptr);
     ~HandleImages();
 
 private slots:
@@ -29,9 +30,10 @@ private slots:
 
 private:
     Ui::HandleImages *ui;
+    ServiceFactory *factory;
     EntityImageService *entityImageService;
-    int entityId;
-    QString entityType;
+    ProjectService *projectService;
+    int projectId;
     QString cachedPath;
 
     //------ Initialization ------
