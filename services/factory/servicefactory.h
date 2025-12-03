@@ -10,6 +10,7 @@
 #include "projectservice.h"
 #include "entityimageservice.h"
 #include "featureservice.h"
+#include "technicalinfoservice.h"
 
 class ServiceFactory
 {
@@ -27,6 +28,7 @@ public:
     ProjectService* makeProjectService(QObject *parent);
     EntityImageService* makeEntityImageService(QObject *parent);
     FeatureService* makeFeatureService(QObject *parent);
+    TechnicalInfoService* makeTechnicalInfoService(QObject *parent);
 
 private:
     ApiClient apiClient;
