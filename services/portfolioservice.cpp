@@ -86,16 +86,16 @@ void PortfolioService::getUserPhotoFinished()
 Portfolio PortfolioService::handlePortfolioFinished(const QByteArray &data)
 {
     QJsonDocument jsonDoc = QJsonDocument::fromJson(data);
+    if(!jsonDoc.isObject()) return Portfolio();
     QJsonObject obj = jsonDoc.object();
-    QJsonObject jsonPortfolio = obj["data"].toObject();
 
     Portfolio portfolio;
-    portfolio.setUserName(jsonPortfolio["user_name"].toString());
-    portfolio.setUserProfession(jsonPortfolio["user_profession"].toString());
-    portfolio.setUserPhotoPath(jsonPortfolio["user_photo"].toString());
-    portfolio.setUserAbout(jsonPortfolio["user_about"].toString());
-    portfolio.setTechnologies(getTechnologiesFromArray(jsonPortfolio["techs"].toArray()));
-    portfolio.setProjects(getProjectsFromArray(jsonPortfolio["projects"].toArray()));
+    portfolio.setUserName(obj["user_name"].toString());
+    portfolio.setUserProfession(obj["user_profession"].toString());
+    portfolio.setUserPhotoPath(obj["user_photo"].toString());
+    portfolio.setUserAbout(obj["user_about"].toString());
+    portfolio.setTechnologies(getTechnologiesFromArray(obj["techs"].toArray()));
+    portfolio.setProjects(getProjectsFromArray(obj["projects"].toArray()));
 
     return portfolio;
 }
