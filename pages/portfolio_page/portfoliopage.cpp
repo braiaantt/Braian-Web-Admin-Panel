@@ -39,10 +39,13 @@ void PortfolioPage::connectSignalsAndSlots()
     connect(portfolioService, &PortfolioService::errorOcurred, this, &PortfolioPage::errorOcurred);
 
     connect(technologyService, &TechnologyService::techIconReceipt, this, &PortfolioPage::techIconReceipt);
+    connect(technologyService, &TechnologyService::errorOcurred, this, &PortfolioPage::errorOcurred);
 
+    connect(entityTechService, &EntityTechService::errorOcurred, this, &PortfolioPage::errorOcurred);
     connect(entityTechService, &EntityTechService::errorOcurred, this, &PortfolioPage::errorOcurred);
 
     connect(projectService, &ProjectService::projectCoverReceipt, this, &PortfolioPage::projectCoverReceipt);
+    connect(projectService, &ProjectService::errorOcurred, this, &PortfolioPage::errorOcurred);
 }
 
 //------ UI Slots ------
@@ -93,6 +96,20 @@ void PortfolioPage::on_pushButtonHandleTechnologies_clicked()
 void PortfolioPage::loadPortfolio()
 {
     portfolioService->getPortfolio();
+}
+
+//------ Public Slots ------
+
+void PortfolioPage::deleteProject(int projectId)
+{
+    QHBoxLayout *layout = (QHBoxLayout*)ui->scrollAreaProjectWidgetContents->layout();
+    for(int i = 0; i<layout->count(); i++){
+        PortfolioProject *projectWidget = qobject_cast<PortfolioProject*>(layout->itemAt(i)->widget());
+        if(projectWidget && projectWidget->getProject().getId() == projectId){
+            layout->removeWidget(projectWidget);
+            break;
+        }
+    }
 }
 
 //------ Private Slots ------
