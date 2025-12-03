@@ -107,6 +107,7 @@ void PortfolioPage::deleteProject(int projectId)
         PortfolioProject *projectWidget = qobject_cast<PortfolioProject*>(layout->itemAt(i)->widget());
         if(projectWidget && projectWidget->getProject().getId() == projectId){
             layout->removeWidget(projectWidget);
+            projectWidget->deleteLater();
             break;
         }
     }
