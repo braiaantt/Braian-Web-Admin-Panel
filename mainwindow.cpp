@@ -80,6 +80,7 @@ void MainWindow::projectClicked(const Project &project)
     QWidget* stackedWidgetPage = ui->stackedWidgetPages->findChild<QWidget*>(PageName::PROJECT);
     if(stackedWidgetPage && stackedWidgetPage->layout()){
         connect(projectPage, &ProjectPage::backToPortfolio, this, &MainWindow::backToPortfolioPage);
+        connect(projectPage, &ProjectPage::deleteProject, portfolioPage, &PortfolioPage::deleteProject);
         stackedWidgetPage->layout()->addWidget(projectPage);
         ui->stackedWidgetPages->setCurrentWidget(stackedWidgetPage);
     } else {
