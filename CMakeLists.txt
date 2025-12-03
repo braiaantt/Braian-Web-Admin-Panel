@@ -42,6 +42,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         models/project.h models/project.cpp
         models/technology.h models/technology.cpp
         models/feature.h models/feature.cpp
+        models/technicalinfo.h models/technicalinfo.cpp
 
         #------ Network ------
         network/apiclient.h network/apiclient.cpp
@@ -67,6 +68,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         pages/portfolio_page/dialogs/technologyrelation.h pages/portfolio_page/dialogs/technologyrelation.cpp pages/portfolio_page/dialogs/technologyrelation.ui
         pages/project_page/dialogs/handleimages.h pages/project_page/dialogs/handleimages.cpp pages/project_page/dialogs/handleimages.ui
         pages/project_page/dialogs/featureshandler.h pages/project_page/dialogs/featureshandler.cpp pages/project_page/dialogs/featureshandler.ui
+        pages/project_page/dialogs/technicalinfohandler.h pages/project_page/dialogs/technicalinfohandler.cpp pages/project_page/dialogs/technicalinfohandler.ui
 
         #------ Services ------
         services/authservice.h services/authservice.cpp
@@ -77,11 +79,11 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         services/entityimageservice.h services/entityimageservice.cpp
         services/factory/servicefactory.h services/factory/servicefactory.cpp
         services/featureservice.h services/featureservice.cpp
+        services/technicalinfoservice.h services/technicalinfoservice.cpp
 
         #------ Utils ------
         utils/utils.h utils/utils.cpp
         utils/networkutils.h utils/networkutils.cpp
-
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET web_admin_panel APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
