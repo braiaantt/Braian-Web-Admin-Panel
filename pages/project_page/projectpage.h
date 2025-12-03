@@ -7,6 +7,7 @@
 #include "technologyservice.h"
 #include "entitytechservice.h"
 #include "entityimageservice.h"
+#include "projectservice.h"
 
 namespace Ui {
 class ProjectPage;
@@ -23,6 +24,8 @@ public:
 private slots:
     void technologiesRelated(const QVector<Technology> &techs);
     void techIconReceipt(int techId, const QPixmap &pixmap);
+    void projectDeleted();
+    void errorOcurred(const QString &message);
 
     //------ UI Slots ------
     void on_pushButtonBack_clicked();
@@ -35,8 +38,11 @@ private slots:
 
     void on_pushButtonHandleTechnicalInf_clicked();
 
+    void on_pushButtonDeleteProject_clicked();
+
 signals:
     void backToPortfolio(ProjectPage *page);
+    void deleteProject(int projectId);
 
 private:
     Ui::ProjectPage *ui;
@@ -44,6 +50,7 @@ private:
     TechnologyService *technologyService;
     EntityTechService *entityTechService;
     EntityImageService *entityImageService;
+    ProjectService *projectService;
     Project project;
 
     //------ Initialization ------
