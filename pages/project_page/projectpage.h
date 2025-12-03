@@ -31,6 +31,8 @@ private slots:
 
     void on_pushButtonHandleGallery_clicked();
 
+    void on_pushButtonHandleFeats_clicked();
+
 signals:
     void backToPortfolio(ProjectPage *page);
 
