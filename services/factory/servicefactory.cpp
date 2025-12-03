@@ -15,7 +15,7 @@ bool ServiceFactory::init()
     apiClient.setPortfolioEndpoint(config.endpointPortfolio());
     apiClient.setTechnologyEndpoint(config.endpointTechnology());
     apiClient.setEntityTechnologyEndpoint(config.endpointEntityTechnology());
-    apiClient.setEntityImageEndpoint(config.endpointEntityImage());
+    apiClient.setProjectImageEndpoint(config.endpointProjectImage());
     apiClient.setProjectEndpoint(config.endpointProject());
     apiClient.setFeaturesEndpoint(config.endpointFeatures());
     apiClient.setTechnicalInfoEndpoint(config.endpointTechnicalInfo());
