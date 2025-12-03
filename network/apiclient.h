@@ -32,11 +32,12 @@ public:
     QNetworkReply* postProject(QHttpMultiPart *multiPart);
     QNetworkReply* getProjectFeatures(int projectId);
     QNetworkReply* getProjectTechnicalInfo(int projectId);
+    QNetworkReply* getProjectImagePaths(int projectId);
+    QNetworkReply* deleteProject(int projectId);
 
-    //-- Entity Images --
-    QNetworkReply *getEntityImagePaths(const QString &queryParams);
-    QNetworkReply *postEntityImage(QHttpMultiPart *multiPart);
-    QNetworkReply *deleteEntityImage(const QString &queryParams);
+    //-- Project Images --
+    QNetworkReply *postProjectImage(QHttpMultiPart *multiPart);
+    QNetworkReply *deleteProjectImage(const QString &queryParams);
 
     //-- Features --
     QNetworkReply* postFeature(const QByteArray &body);
@@ -55,7 +56,7 @@ public:
     void setPortfolioEndpoint(const QString &portfolioEndpoint);
     void setTechnologyEndpoint(const QString &technologyEndpoint);
     void setEntityTechnologyEndpoint(const QString &entityTechnologyEndpoint);
-    void setEntityImageEndpoint(const QString &entityImageEndpoint);
+    void setProjectImageEndpoint(const QString &projectImageEndpoint);
     void setProjectEndpoint(const QString &projectEndpoint);
     void setFeaturesEndpoint(const QString &featuresEndpoint);
     void setTechnicalInfoEndpoint(const QString &technicalInfoEndpoint);
@@ -74,7 +75,7 @@ private:
     QString technologyEndpoint;
     QString staticEndpoint;
     QString entityTechnologyEndpoint;
-    QString entityImageEndpoint;
+    QString projectImageEndpoint;
     QString projectEndpoint;
     QString featuresEndpoint;
     QString technicalInfoEndpoint;
