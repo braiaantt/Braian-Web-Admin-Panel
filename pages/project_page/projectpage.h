@@ -33,6 +33,8 @@ private slots:
 
     void on_pushButtonHandleFeats_clicked();
 
+    void on_pushButtonHandleTechnicalInf_clicked();
+
 signals:
     void backToPortfolio(ProjectPage *page);
 
