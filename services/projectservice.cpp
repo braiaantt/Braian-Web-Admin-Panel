@@ -1,5 +1,8 @@
 #include "projectservice.h"
+#include <QJsonDocument>
 #include <QJsonObject>
+#include <QJsonArray>
+#include <QJsonValue>
 #include <QFile>
 #include <QPixmap>
 #include "networkutils.h"
@@ -39,6 +42,17 @@ void ProjectService::getProjectCover(int projectId, const QString &coverSrc)
     connect(reply, &QNetworkReply::finished, this, &ProjectService::getProjectCoverFinished);
 }
 
+void ProjectService::getProjectFeatures(int projectId)
+{
+    QNetworkReply *reply = apiClient->getProjectFeatures(projectId);
+    if(!reply){
+        emit errorOcurred("ProjectService - GetProjectFeatures. Reply Null. Not Sended");
+        return;
+    }
+
+    connect(reply, &QNetworkReply::finished, this, &ProjectService::getProjectFeaturesFinished);
+}
+
 //------ Private Slots ------
 
 void ProjectService::createProjectFinished()
@@ -75,6 +89,24 @@ void ProjectService::getProjectCoverFinished()
 
     emit projectCoverReceipt(projectId, pixmap);
 
+    reply->deleteLater();
+}
+
+void ProjectService::getProjectFeaturesFinished()
+{
+    QNetworkReply *reply = qobject_cast<QNetworkReply*>(sender());
+
+    QString errorMsg;
+    if(!NetworkUtils::checkError(reply, errorMsg)){
+        emit errorOcurred("ProjectService - GetProjectFeatures: " + errorMsg);
+        reply->deleteLater();
+        return;
+    }
+
+    QVector<Feature> feats;
+    handleProjectFeaturesReceipt(feats, reply->readAll());
+
+    emit projectFeaturesReceipt(feats);
     reply->deleteLater();
 }
 
@@ -134,4 +166,23 @@ QString ProjectService::projectToStrJson(const Project &project)
     QJsonDocument doc(obj);
     QString projectJson = QString::fromUtf8(doc.toJson());
     return projectJson;
+}
+
+void ProjectService::handleProjectFeaturesReceipt(QVector<Feature> &container, const QByteArray &data)
+{
+    QJsonDocument doc = QJsonDocument::fromJson(data);
+    if(!doc.isArray()) return;
+
+    QJsonArray array = doc.array();
+    for(const QJsonValue &value : std::as_const(array)){
+        if(!value.isObject()) continue;
+
+        QJsonObject obj = value.toObject();
+        int id = obj["id"].toInt();
+        int projectId = obj["project_id"].toInt();
+        QString feat = obj["feat"].toString();
+
+        Feature feature(id, projectId, feat);
+        container.append(feature);
+    }
 }
