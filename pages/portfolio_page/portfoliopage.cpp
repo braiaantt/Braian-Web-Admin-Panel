@@ -36,6 +36,8 @@ void PortfolioPage::init()
 void PortfolioPage::connectSignalsAndSlots()
 {
     connect(portfolioService, &PortfolioService::portfolioReceipt, this, &PortfolioPage::setPortfolio);
+    connect(portfolioService, &PortfolioService::userPhotoUpdated, this, &PortfolioPage::userPhotoUpdated);
+    connect(portfolioService, &PortfolioService::userPhotoReceipt, this, &PortfolioPage::setUserPhoto);
     connect(portfolioService, &PortfolioService::errorOcurred, this, &PortfolioPage::errorOcurred);
 
     connect(technologyService, &TechnologyService::techIconReceipt, this, &PortfolioPage::techIconReceipt);
@@ -80,9 +82,10 @@ void PortfolioPage::on_pushButtonAddProject_clicked()
 void PortfolioPage::on_pushButtonUpdatePhoto_clicked()
 {
     QString imgPath = Utils::selectImageFile();
-    QPixmap pixmap(imgPath);
-    QPixmap roundedPixmap = Utils::roundedPixmap(pixmap, ui->labelPhoto->size());
-    ui->labelPhoto->setPixmap(roundedPixmap);
+    if(imgPath.isNull()) return;
+
+    int portfolioId = 1;
+    portfolioService->updateUserPhoto(portfolioId, imgPath);
 }
 
 void PortfolioPage::on_pushButtonHandleTechnologies_clicked()
@@ -122,6 +125,8 @@ void PortfolioPage::setPortfolio(const Portfolio &portfolio)
     ui->plainTextAbout->appendPlainText(portfolio.getUserAbout());
     setTechnologyWidgets(portfolio.getTechnologies());
     setProjectWidgets(portfolio.getProjects());
+
+    portfolioService->getUserPhoto(portfolio.getUserPhotoPath());
 }
 
 void PortfolioPage::setUserPhoto(const QPixmap &pixmap)
@@ -161,6 +166,11 @@ void PortfolioPage::projectCoverReceipt(int projectId, const QPixmap &pixmap)
 void PortfolioPage::goToProject(const Project &project)
 {
     emit projectClicked(project);
+}
+
+void PortfolioPage::userPhotoUpdated(const QString &path)
+{
+    portfolioService->getUserPhoto(path);
 }
 
 void PortfolioPage::errorOcurred(const QString &message)
