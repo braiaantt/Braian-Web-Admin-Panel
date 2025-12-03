@@ -29,6 +29,7 @@ public slots:
 private slots:
     void setPortfolio(const Portfolio &portfolio);
     void setUserPhoto(const QPixmap &pixmap);
+    void userPhotoUpdated(const QString &path);
     void techIconReceipt(int techId, const QPixmap &pixmap);
     void refreshTechnologies();
     void projectCoverReceipt(int projectId, const QPixmap &pixmap);
