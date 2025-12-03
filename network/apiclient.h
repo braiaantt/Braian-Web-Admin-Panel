@@ -31,6 +31,7 @@ public:
     //-- Project --
     QNetworkReply* postProject(QHttpMultiPart *multiPart);
     QNetworkReply* getProjectFeatures(int projectId);
+    QNetworkReply* getProjectTechnicalInfo(int projectId);
 
     //-- Entity Images --
     QNetworkReply *getEntityImagePaths(const QString &queryParams);
@@ -40,6 +41,10 @@ public:
     //-- Features --
     QNetworkReply* postFeature(const QByteArray &body);
     QNetworkReply* deleteFeature(int featureId);
+
+    //-- Technical Info --
+    QNetworkReply* postTechnicalInfo(const QByteArray &body);
+    QNetworkReply* deleteTechnicalInfo(int infoId);
 
     //-- Static --
     QNetworkReply* getImage(const QString &path);
@@ -53,6 +58,7 @@ public:
     void setEntityImageEndpoint(const QString &entityImageEndpoint);
     void setProjectEndpoint(const QString &projectEndpoint);
     void setFeaturesEndpoint(const QString &featuresEndpoint);
+    void setTechnicalInfoEndpoint(const QString &technicalInfoEndpoint);
     void setAccessToken(const QString &accesstoken);
     void setRefreshToken(const QString &refreshToken);
 
@@ -71,6 +77,7 @@ private:
     QString entityImageEndpoint;
     QString projectEndpoint;
     QString featuresEndpoint;
+    QString technicalInfoEndpoint;
 };
 
 #endif // APICLIENT_H
