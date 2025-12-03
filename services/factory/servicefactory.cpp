@@ -18,6 +18,7 @@ bool ServiceFactory::init()
     apiClient.setEntityImageEndpoint(config.endpointEntityImage());
     apiClient.setProjectEndpoint(config.endpointProject());
     apiClient.setFeaturesEndpoint(config.endpointFeatures());
+    apiClient.setTechnicalInfoEndpoint(config.endpointTechnicalInfo());
 
     return true;
 }
@@ -57,4 +58,9 @@ EntityImageService *ServiceFactory::makeEntityImageService(QObject *parent)
 FeatureService *ServiceFactory::makeFeatureService(QObject *parent)
 {
     return new FeatureService(&apiClient, parent);
+}
+
+TechnicalInfoService* ServiceFactory::makeTechnicalInfoService(QObject *parent)
+{
+    return new TechnicalInfoService(&apiClient, parent);
 }
