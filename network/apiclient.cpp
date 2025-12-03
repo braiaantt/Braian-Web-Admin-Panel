@@ -95,6 +95,15 @@ QNetworkReply* ApiClient::getProjectFeatures(int projectId)
     return basicRequests->get(finalEndpoint, headers);
 }
 
+QNetworkReply* ApiClient::getProjectTechnicalInfo(int projectId)
+{
+    QMap<QByteArray,QByteArray> headers;
+    headers.insert("Authorization", ("Bearer " + accessToken).toUtf8());
+    QString finalEndpoint = projectEndpoint + "/" +QString::number(projectId) + technicalInfoEndpoint;
+
+    return basicRequests->get(finalEndpoint, headers);
+}
+
 //-- Static --
 
 QNetworkReply* ApiClient::getImage(const QString &path)
@@ -147,6 +156,25 @@ QNetworkReply* ApiClient::deleteFeature(int featureId)
     return basicRequests->deleteResource(featuresEndpoint + "/" + QString::number(featureId), headers);
 }
 
+//-- Technical Info --
+
+QNetworkReply* ApiClient::postTechnicalInfo(const QByteArray &body)
+{
+    QMap<QByteArray,QByteArray> headers;
+    headers.insert("Authorization", ("Bearer " + accessToken).toUtf8());
+    headers.insert("Content-Type", "application/json");
+
+    return basicRequests->post(technicalInfoEndpoint, body, headers);
+}
+
+QNetworkReply* ApiClient::deleteTechnicalInfo(int techId)
+{
+    QMap<QByteArray,QByteArray> headers;
+    headers.insert("Authorization", ("Bearer " + accessToken).toUtf8());
+
+    return basicRequests->deleteResource(technicalInfoEndpoint + "/" + QString::number(techId), headers);
+}
+
 //------ Setters ------
 
 void ApiClient::setHostName(const QString &_hostName)
@@ -185,6 +213,11 @@ void ApiClient::setProjectEndpoint(const QString &endpoint){
 
 void ApiClient::setFeaturesEndpoint(const QString &endpoint){
     featuresEndpoint = endpoint;
+}
+
+void ApiClient::setTechnicalInfoEndpoint(const QString &endpoint)
+{
+    technicalInfoEndpoint = endpoint;
 }
 
 void ApiClient::setAccessToken(const QString &token){
