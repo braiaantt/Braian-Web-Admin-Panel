@@ -15,38 +15,23 @@ EntityImageService::EntityImageService(ApiClient *apiClient, QObject *parent)
 
 //------- Public Methods ------
 
-void EntityImageService::addImage(int entityId, const QString &entityType, const QString &imgPath)
+void EntityImageService::addImage(int projectId, const QString &imgPath)
 {
-    QHttpMultiPart *multiPart = makeAddImageMultiPart(entityId, entityType, imgPath);
-    QNetworkReply *reply = apiClient->postEntityImage(multiPart);
+    QHttpMultiPart *multiPart = makeAddImageMultiPart(projectId, imgPath);
+    QNetworkReply *reply = apiClient->postProjectImage(multiPart);
     if(!reply){
-        emit errorOcurred("EntityImageService - AddImage: Reply Null. Not Sended");
+        emit errorOcurred("ProjectImageService - AddImage: Reply Null. Not Sended");
         return;
     }
 
     connect(reply, &QNetworkReply::finished, this, &EntityImageService::addImageFinished);
 }
 
-void EntityImageService::getImagePaths(int entityId, const QString &entityType)
-{
-    QString queryParams = QString("?entity_id=%1&entity_type=%2").
-                          arg(entityId).
-                          arg(entityType);
-
-    QNetworkReply *reply = apiClient->getEntityImagePaths(queryParams);
-    if(!reply){
-        emit errorOcurred("EntityImageService - GetImagePaths: Reply Null. Not Sended.");
-        return;
-    }
-
-    connect(reply, &QNetworkReply::finished, this, &EntityImageService::getImagePathsFinished);
-}
-
 void EntityImageService::getImage(const QString &path)
 {
     QNetworkReply *reply = apiClient->getImage(path);
     if(!reply){
-        emit errorOcurred("EntityImageService - GetImage: Reply Null. Not Sended");
+        emit errorOcurred("ProjectImageService - GetImage: Reply Null. Not Sended");
         return;
     }
 
@@ -54,14 +39,14 @@ void EntityImageService::getImage(const QString &path)
     connect(reply, &QNetworkReply::finished, this, &EntityImageService::getImageFinished);
 }
 
-void EntityImageService::deleteImage(int entityId, const QString &entityType, const QString &sourcePath)
+void EntityImageService::deleteImage(int projectId, const QString &sourcePath)
 {
-    QString queryParams = QString("?entity_id=%1&entity_type=%2&img_path=%3")
-                              .arg(QString::number(entityId), entityType, sourcePath);
+    QString queryParams = QString("?id_project=%1&src=%2")
+                              .arg(QString::number(projectId), sourcePath);
 
-    QNetworkReply *reply = apiClient->deleteEntityImage(queryParams);
+    QNetworkReply *reply = apiClient->deleteProjectImage(queryParams);
     if(!reply){
-        emit errorOcurred("EntityImageService - deleteImage: Reply Null. Not Sended.");
+        emit errorOcurred("ProjectImageService - DeleteImage: Reply Null. Not Sended.");
         return;
     }
     connect(reply, &QNetworkReply::finished, this, &EntityImageService::deleteImageFinished);
@@ -80,21 +65,6 @@ void EntityImageService::addImageFinished()
     }
     QString imgPath = QString::fromUtf8(reply->readAll());
     emit imageCreated(imgPath);
-    reply->deleteLater();
-}
-
-void EntityImageService::getImagePathsFinished()
-{
-    QNetworkReply *reply = qobject_cast<QNetworkReply*>(sender());
-    QString errorMsg;
-    if(!NetworkUtils::checkError(reply, errorMsg)){
-        emit errorOcurred("EntityImageService - GetImagePaths: " + errorMsg);
-        reply->deleteLater();
-        return;
-    }
-
-    QVector<QString> paths = handleGetImagePaths(reply->readAll());
-    emit pathsReceipt(paths);
     reply->deleteLater();
 }
 
@@ -130,38 +100,17 @@ void EntityImageService::deleteImageFinished()
     reply->deleteLater();
 }
 
-//------ Reply Handlers ------
-
-QVector<QString> EntityImageService::handleGetImagePaths(const QByteArray &data)
-{
-    QJsonDocument doc = QJsonDocument::fromJson(data);
-    if(!doc.isArray()) return {};
-
-    QJsonArray array = doc.array();
-    QVector<QString> paths;
-
-    for(const QJsonValue &value : std::as_const(array)){
-        if(!value.isString())
-            continue;
-
-        paths.append(value.toString());
-    }
-
-    return paths;
-}
-
 //------ Helpers ------
 
-QHttpMultiPart* EntityImageService::makeAddImageMultiPart(int entityId, const QString &entityType, const QString &imgPath)
+QHttpMultiPart* EntityImageService::makeAddImageMultiPart(int projectId, const QString &imgPath)
 {
     QHttpMultiPart* multiPart = new QHttpMultiPart(QHttpMultiPart::FormDataType);
 
-    //-- Json Part --
-    QString json = dataToStrJson(entityId, entityType);
+    //-- Project Id Part --
     QHttpPart jsonPart;
     jsonPart.setHeader(QNetworkRequest::ContentDispositionHeader,
-                       QVariant("form-data; name=\"json\""));
-    jsonPart.setBody(json.toUtf8());
+                       QVariant("form-data; name=\"project_id\""));
+    jsonPart.setBody(QString::number(projectId).toUtf8());
 
     //-- File part --
     QFile *file = new QFile(imgPath);
@@ -181,14 +130,4 @@ QHttpMultiPart* EntityImageService::makeAddImageMultiPart(int entityId, const QS
     multiPart->append(filePart);
 
     return multiPart;
-}
-
-QString EntityImageService::dataToStrJson(int entityId, const QString &entityType)
-{
-    QJsonObject obj;
-    obj["entity_id"] = entityId;
-    obj["entity_type"] = entityType;
-
-    QJsonDocument doc(obj);
-    return QString::fromUtf8(doc.toJson());
 }
