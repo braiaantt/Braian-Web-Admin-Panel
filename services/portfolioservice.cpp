@@ -3,6 +3,7 @@
 #include <QJsonObject>
 #include <QJsonValue>
 #include <QPixmap>
+#include <QFile>
 #include "networkutils.h"
 
 PortfolioService::PortfolioService(ApiClient *apiClient, QObject *parent) :
@@ -21,6 +22,19 @@ void PortfolioService::getPortfolio()
     }
 
     connect(reply, &QNetworkReply::finished, this, &PortfolioService::getPortfolioFinished);
+}
+
+void PortfolioService::updateUserPhoto(int portfolioId, const QString &srcPath)
+{
+    QHttpMultiPart *multiPart = makeUserPhotoMultiPart(srcPath);
+    QNetworkReply *reply = apiClient->updateUserPhoto(portfolioId, multiPart);
+    if(!reply){
+        emit errorOcurred("PortfolioService - UpdateUserPhoto. Reply Null. Not Sended");
+        multiPart->deleteLater();
+        return;
+    }
+
+    connect(reply, &QNetworkReply::finished, this, &PortfolioService::updateUserPhotoFinished);
 }
 
 void PortfolioService::getUserPhoto(const QString &path)
@@ -53,7 +67,6 @@ void PortfolioService::getPortfolioFinished()
     }
 
     Portfolio portfolio = handlePortfolioFinished(reply->readAll());
-    getUserPhoto(portfolio.getUserPhotoPath());
     emit portfolioReceipt(portfolio);
 
     reply->deleteLater();
@@ -81,6 +94,20 @@ void PortfolioService::getUserPhotoFinished()
     reply->deleteLater();
 }
 
+void PortfolioService::updateUserPhotoFinished()
+{
+    QNetworkReply *reply = qobject_cast<QNetworkReply*>(sender());
+    QString errorMsg;
+    if(!NetworkUtils::checkError(reply, errorMsg)){
+        emit errorOcurred("PortfolioService - UpdateUserPhoto" + errorMsg);
+        reply->deleteLater();
+        return;
+    }
+
+    emit userPhotoUpdated(handleUpdateUserPhoto(reply->readAll()));
+    reply->deleteLater();
+}
+
 //------ Request Handlers ------
 
 Portfolio PortfolioService::handlePortfolioFinished(const QByteArray &data)
@@ -98,6 +125,15 @@ Portfolio PortfolioService::handlePortfolioFinished(const QByteArray &data)
     portfolio.setProjects(getProjectsFromArray(obj["projects"].toArray()));
 
     return portfolio;
+}
+
+QString PortfolioService::handleUpdateUserPhoto(const QByteArray &data)
+{
+    QJsonDocument doc = QJsonDocument::fromJson(data);
+    if(!doc.isObject()) return "";
+
+    QJsonObject obj = doc.object();
+    return obj["path"].toString();
 }
 
 //------ Helpers ------
@@ -142,4 +178,24 @@ QVector<Project> PortfolioService::getProjectsFromArray(const QJsonArray &array)
     }
 
     return projects;
+}
+
+QHttpMultiPart* PortfolioService::makeUserPhotoMultiPart(const QString &srcPath)
+{
+    QHttpMultiPart* multiPart = new QHttpMultiPart(QHttpMultiPart::FormDataType);
+
+    QFile* file = new QFile(srcPath);
+    file->open(QIODevice::ReadOnly);
+
+    QHttpPart filePart;
+    filePart.setHeader(
+        QNetworkRequest::ContentDispositionHeader,
+        QVariant("form-data; name=\"file\"; filename=\"" + file->fileName().toUtf8() + "\"")
+        );
+    filePart.setHeader(QNetworkRequest::ContentTypeHeader, "image/*");
+    filePart.setBodyDevice(file);
+
+    multiPart->append(filePart);
+
+    return multiPart;
 }
