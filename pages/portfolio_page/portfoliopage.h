@@ -23,6 +23,9 @@ public:
 
     void loadPortfolio();
 
+public slots:
+    void deleteProject(int projectId);
+
 private slots:
     void setPortfolio(const Portfolio &portfolio);
     void setUserPhoto(const QPixmap &pixmap);
