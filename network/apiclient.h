@@ -17,6 +17,7 @@ public:
 
     //-- Portfolio --
     QNetworkReply* getPortfolio();
+    QNetworkReply* updateUserPhoto(int portfolioId, QHttpMultiPart *multiPart);
 
     //-- Technology --
     QNetworkReply* postTechnology(QHttpMultiPart *multipart);
