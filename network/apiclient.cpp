@@ -104,6 +104,24 @@ QNetworkReply* ApiClient::getProjectTechnicalInfo(int projectId)
     return basicRequests->get(finalEndpoint, headers);
 }
 
+QNetworkReply* ApiClient::getProjectImagePaths(int projectId)
+{
+    QMap<QByteArray,QByteArray> headers;
+    headers.insert("Authorization", ("Bearer " + accessToken).toUtf8());
+    QString finalEndpoint = projectEndpoint + "/" +QString::number(projectId) + "/images";
+
+    return basicRequests->get(finalEndpoint, headers);
+}
+
+QNetworkReply* ApiClient::deleteProject(int projectId)
+{
+    QMap<QByteArray,QByteArray> headers;
+    headers.insert("Authorization", ("Bearer " + accessToken).toUtf8());
+    QString finalEndpoint = projectEndpoint + "/" +QString::number(projectId);
+
+    return basicRequests->deleteResource(finalEndpoint, headers);
+}
+
 //-- Static --
 
 QNetworkReply* ApiClient::getImage(const QString &path)
@@ -111,30 +129,22 @@ QNetworkReply* ApiClient::getImage(const QString &path)
     return basicRequests->get(path);
 }
 
-//-- Entity Images --
+//-- Project Images --
 
-QNetworkReply* ApiClient::getEntityImagePaths(const QString &queryParams)
+QNetworkReply *ApiClient::postProjectImage(QHttpMultiPart *multiPart)
 {
     QMap<QByteArray,QByteArray> headers;
     headers.insert("Authorization", ("Bearer " + accessToken).toUtf8());
 
-    return basicRequests->get(entityImageEndpoint + queryParams, headers);
+    return basicRequests->postMultipart(projectImageEndpoint, multiPart, headers);
 }
 
-QNetworkReply *ApiClient::postEntityImage(QHttpMultiPart *multiPart)
+QNetworkReply *ApiClient::deleteProjectImage(const QString &queryParams)
 {
     QMap<QByteArray,QByteArray> headers;
     headers.insert("Authorization", ("Bearer " + accessToken).toUtf8());
 
-    return basicRequests->postMultipart(entityImageEndpoint, multiPart, headers);
-}
-
-QNetworkReply *ApiClient::deleteEntityImage(const QString &queryParams)
-{
-    QMap<QByteArray,QByteArray> headers;
-    headers.insert("Authorization", ("Bearer " + accessToken).toUtf8());
-
-    return basicRequests->deleteResource(entityImageEndpoint + queryParams, headers);
+    return basicRequests->deleteResource(projectImageEndpoint + queryParams, headers);
 }
 
 //-- Features --
@@ -202,9 +212,9 @@ void ApiClient::setEntityTechnologyEndpoint(const QString &endpoint)
     entityTechnologyEndpoint = endpoint;
 }
 
-void ApiClient::setEntityImageEndpoint(const QString &endpoint)
+void ApiClient::setProjectImageEndpoint(const QString &endpoint)
 {
-    entityImageEndpoint = endpoint;
+    projectImageEndpoint = endpoint;
 }
 
 void ApiClient::setProjectEndpoint(const QString &endpoint){
