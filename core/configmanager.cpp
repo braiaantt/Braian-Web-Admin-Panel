@@ -46,10 +46,10 @@ QString ConfigManager::endpointEntityTechnology() const
     return routesObj.value("entityTechnology").toString();
 }
 
-QString ConfigManager::endpointEntityImage() const
+QString ConfigManager::endpointProjectImage() const
 {
     const QJsonObject routesObj = api.value("endpoints").toObject();
-    return routesObj.value("entityImage").toString();
+    return routesObj.value("projectImages").toString();
 }
 
 QString ConfigManager::endpointProject() const

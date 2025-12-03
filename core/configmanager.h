@@ -15,7 +15,7 @@ public:
     QString endpointPortfolio() const;
     QString endpointTechnology() const;
     QString endpointEntityTechnology() const;
-    QString endpointEntityImage() const;
+    QString endpointProjectImage() const;
     QString endpointProject() const;
     QString endpointFeatures() const;
     QString endpointTechnicalInfo() const;
