@@ -3,8 +3,8 @@
 #include "utils.h"
 #include "imagewidget.h"
 
-HandleImages::HandleImages(EntityImageService *entityImageService, int entityId, const QString &entityType, QWidget *parent)
-    : QDialog(parent), entityImageService(entityImageService), entityId(entityId), entityType(entityType)
+HandleImages::HandleImages(ServiceFactory *factory, int projectId, QWidget *parent)
+    : QDialog(parent), factory(factory), projectId(projectId)
     , ui(new Ui::HandleImages)
 {
     ui->setupUi(this);
@@ -20,13 +20,18 @@ HandleImages::~HandleImages()
 
 void HandleImages::init()
 {
+    projectService = factory->makeProjectService(this);
+    entityImageService = factory->makeEntityImageService(this);
+
     connectSignalsAndSlots();
-    entityImageService->getImagePaths(entityId, entityType);
+    projectService->getProjectImagePaths(projectId);
 }
 
 void HandleImages::connectSignalsAndSlots()
 {
-    connect(entityImageService, &EntityImageService::pathsReceipt, this, &HandleImages::pathsReceipt);
+    connect(projectService, &ProjectService::imagePathsReceipt, this, &HandleImages::pathsReceipt);
+    connect(projectService, &ProjectService::errorOcurred, this, &HandleImages::errorOcurred);
+
     connect(entityImageService, &EntityImageService::imageReceipt, this, &HandleImages::imageReceipt);
     connect(entityImageService, &EntityImageService::imageCreated, this, &HandleImages::imageCreated);
     connect(entityImageService, &EntityImageService::deleteImageSuccess, this, &HandleImages::deleteImageSuccess);
@@ -75,7 +80,7 @@ void HandleImages::imageReceipt(const QString &imgPath, const QPixmap &pixmap)
 void HandleImages::removeImage(const QString &path)
 {
     cachedPath = path;
-    entityImageService->deleteImage(entityId, entityType, path);
+    entityImageService->deleteImage(projectId, path);
 }
 
 void HandleImages::deleteImageSuccess()
@@ -105,6 +110,6 @@ void HandleImages::errorOcurred(const QString &message)
 void HandleImages::on_pushButton_clicked()
 {
     cachedPath = Utils::selectImageFile();
-    entityImageService->addImage(entityId, entityType, cachedPath);
+    entityImageService->addImage(projectId, cachedPath);
 }
 
