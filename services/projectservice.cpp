@@ -53,6 +53,17 @@ void ProjectService::getProjectFeatures(int projectId)
     connect(reply, &QNetworkReply::finished, this, &ProjectService::getProjectFeaturesFinished);
 }
 
+void ProjectService::getProjectTechnicalInfo(int projectId)
+{
+    QNetworkReply *reply = apiClient->getProjectTechnicalInfo(projectId);
+    if(!reply){
+        emit errorOcurred("ProjectService - GetTechnicalInfo: Reply Null. Not Sended");
+        return;
+    }
+
+    connect(reply, &QNetworkReply::finished, this, &ProjectService::getProjectTechnicalInfoFinished);
+}
+
 //------ Private Slots ------
 
 void ProjectService::createProjectFinished()
@@ -107,6 +118,24 @@ void ProjectService::getProjectFeaturesFinished()
     handleProjectFeaturesReceipt(feats, reply->readAll());
 
     emit projectFeaturesReceipt(feats);
+    reply->deleteLater();
+}
+
+void ProjectService::getProjectTechnicalInfoFinished()
+{
+    QNetworkReply *reply = qobject_cast<QNetworkReply*>(sender());
+
+    QString errorMsg;
+    if(!NetworkUtils::checkError(reply, errorMsg)){
+        emit errorOcurred("ProjectService - GetProjectTechnicalInfo: " + errorMsg);
+        reply->deleteLater();
+        return;
+    }
+
+    QVector<TechnicalInfo> info;
+    handleProjectTechnicalInfo(info, reply->readAll());
+
+    emit projectTechnicalInfoReceipt(info);
     reply->deleteLater();
 }
 
@@ -184,5 +213,23 @@ void ProjectService::handleProjectFeaturesReceipt(QVector<Feature> &container, c
 
         Feature feature(id, projectId, feat);
         container.append(feature);
+    }
+}
+
+void ProjectService::handleProjectTechnicalInfo(QVector<TechnicalInfo> &container, const QByteArray &data)
+{
+    QJsonDocument doc = QJsonDocument::fromJson(data);
+    if(!doc.isArray()) return;
+
+    QJsonArray array = doc.array();
+    for(const QJsonValue &value : std::as_const(array)){
+        if(!value.isObject()) continue;
+
+        QJsonObject obj = value.toObject();
+        int id = obj["id"].toInt();
+        int projectId = obj["project_id"].toInt();
+        QString info = obj["info"].toString();
+
+        container.append(TechnicalInfo(id, projectId, info));
     }
 }
