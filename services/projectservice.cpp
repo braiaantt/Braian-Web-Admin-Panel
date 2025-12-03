@@ -64,6 +64,28 @@ void ProjectService::getProjectTechnicalInfo(int projectId)
     connect(reply, &QNetworkReply::finished, this, &ProjectService::getProjectTechnicalInfoFinished);
 }
 
+void ProjectService::getProjectImagePaths(int projectId)
+{
+    QNetworkReply *reply = apiClient->getProjectImagePaths(projectId);
+    if(!reply){
+        emit errorOcurred("ProjectService - GetImagePaths: Reply Null. Not Sended");
+        return;
+    }
+
+    connect(reply, &QNetworkReply::finished, this, &ProjectService::getImagePathsFinished);
+}
+
+void ProjectService::deleteProject(int projectId)
+{
+    QNetworkReply *reply = apiClient->deleteProject(projectId);
+    if(!reply){
+        emit errorOcurred("ProjectService - DeleteProject: Reply Null. Not Sended.");
+        return;
+    }
+
+    connect(reply, &QNetworkReply::finished, this, &ProjectService::deleteProjectFinished);
+}
+
 //------ Private Slots ------
 
 void ProjectService::createProjectFinished()
@@ -136,6 +158,39 @@ void ProjectService::getProjectTechnicalInfoFinished()
     handleProjectTechnicalInfo(info, reply->readAll());
 
     emit projectTechnicalInfoReceipt(info);
+    reply->deleteLater();
+}
+
+void ProjectService::getImagePathsFinished()
+{
+    QNetworkReply *reply = qobject_cast<QNetworkReply*>(sender());
+
+    QString errorMsg;
+    if(!NetworkUtils::checkError(reply, errorMsg)){
+        emit errorOcurred("ProjectService - GetImagePaths: " + errorMsg);
+        reply->deleteLater();
+        return;
+    }
+
+    QVector<QString> paths;
+    handleGetImagePaths(paths, reply->readAll());
+
+    emit imagePathsReceipt(paths);
+    reply->deleteLater();
+}
+
+void ProjectService::deleteProjectFinished()
+{
+    QNetworkReply *reply = qobject_cast<QNetworkReply*>(sender());
+
+    QString errorMsg;
+    if(!NetworkUtils::checkError(reply, errorMsg)){
+        emit errorOcurred("ProjectService - DeleteProject: " + errorMsg);
+        reply->deleteLater();
+        return;
+    }
+
+    emit projectDeleted();
     reply->deleteLater();
 }
 
@@ -231,5 +286,18 @@ void ProjectService::handleProjectTechnicalInfo(QVector<TechnicalInfo> &containe
         QString info = obj["info"].toString();
 
         container.append(TechnicalInfo(id, projectId, info));
+    }
+}
+
+void ProjectService::handleGetImagePaths(QVector<QString> &container, const QByteArray &data)
+{
+    QJsonDocument doc = QJsonDocument::fromJson(data);
+    if(!doc.isArray()) return;
+
+    QJsonArray array = doc.array();
+    for(const QJsonValue &value : std::as_const(array)){
+        if(!value.isString()) continue;
+
+        container.append(value.toString());
     }
 }
