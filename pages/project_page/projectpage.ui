@@ -158,6 +158,13 @@ color: #fff;
        </item>
       </layout>
      </item>
+     <item alignment="Qt::AlignmentFlag::AlignTop">
+      <widget class="QPushButton" name="pushButtonDeleteProject">
+       <property name="text">
+        <string>Eliminar Proyecto</string>
+       </property>
+      </widget>
+     </item>
      <item>
       <spacer name="horizontalSpacer_2">
        <property name="orientation">
