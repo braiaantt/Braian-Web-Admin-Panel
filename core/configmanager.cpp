@@ -64,6 +64,12 @@ QString ConfigManager::endpointFeatures() const
     return routesObj.value("features").toString();
 }
 
+QString ConfigManager::endpointTechnicalInfo() const
+{
+    const QJsonObject routesObj = api.value("endpoints").toObject();
+    return routesObj.value("technicalInfo").toString();
+}
+
 //------ Persistent settings ------
 
 QSettings& ConfigManager::settings()
