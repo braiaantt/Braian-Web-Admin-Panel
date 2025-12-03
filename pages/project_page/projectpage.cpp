@@ -2,6 +2,7 @@
 #include "ui_projectpage.h"
 #include "technologyrelation.h"
 #include "handleimages.h"
+#include "featureshandler.h"
 
 ProjectPage::ProjectPage(ServiceFactory *factory, const Project &project, QWidget *parent)
     : QWidget(parent), factory(factory), project(project)
@@ -61,6 +62,20 @@ void ProjectPage::on_pushButtonAddTechnology_clicked()
     //connect and disconnect this way temporaly
 }
 
+void ProjectPage::on_pushButtonHandleGallery_clicked()
+{
+    QString entityType = "project";
+    HandleImages dialog(entityImageService, project.getId(), entityType, this);
+    dialog.exec();;
+}
+
+
+void ProjectPage::on_pushButtonHandleFeats_clicked()
+{
+    FeaturesHandler dialog(factory, project.getId(), this);
+    dialog.exec();
+}
+
 //------ Private Slots ------
 
 void ProjectPage::technologiesRelated(const QVector<Technology> &techs)
@@ -75,12 +90,5 @@ void ProjectPage::technologiesRelated(const QVector<Technology> &techs)
 void ProjectPage::techIconReceipt(int techId, const QPixmap &pixmap)
 {
     ui->scrollAreaTechnologies->setTechIcon(techId, pixmap);
-}
-
-void ProjectPage::on_pushButtonHandleGallery_clicked()
-{
-    QString entityType = "project";
-    HandleImages dialog(entityImageService, project.getId(), entityType, this);
-    dialog.exec();;
 }
 
