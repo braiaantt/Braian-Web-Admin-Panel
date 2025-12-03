@@ -3,6 +3,7 @@
 #include "technologyrelation.h"
 #include "handleimages.h"
 #include "featureshandler.h"
+#include "technicalinfohandler.h"
 
 ProjectPage::ProjectPage(ServiceFactory *factory, const Project &project, QWidget *parent)
     : QWidget(parent), factory(factory), project(project)
@@ -76,6 +77,12 @@ void ProjectPage::on_pushButtonHandleFeats_clicked()
     dialog.exec();
 }
 
+void ProjectPage::on_pushButtonHandleTechnicalInf_clicked()
+{
+    TechnicalInfoHandler dialog(factory, project.getId(), this);
+    dialog.exec();
+}
+
 //------ Private Slots ------
 
 void ProjectPage::technologiesRelated(const QVector<Technology> &techs)
@@ -91,4 +98,3 @@ void ProjectPage::techIconReceipt(int techId, const QPixmap &pixmap)
 {
     ui->scrollAreaTechnologies->setTechIcon(techId, pixmap);
 }
-
