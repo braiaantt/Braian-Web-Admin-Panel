@@ -53,7 +53,6 @@ private:
     ServiceFactory *factory;
     PortfolioService *portfolioService;
     TechnologyService *technologyService;
-    EntityTechService *entityTechService;
     ProjectService *projectService;
 
     //------ Initialization ------

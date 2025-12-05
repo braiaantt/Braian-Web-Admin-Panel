@@ -26,7 +26,6 @@ void PortfolioPage::init()
 {
     portfolioService = factory->makePortfolioService(this);
     technologyService = factory->makeTechnologyService(this);
-    entityTechService = factory->makeEntityTechService(this);
     projectService = factory->makeProjectService(this);
 
     connectSignalsAndSlots();
@@ -42,9 +41,6 @@ void PortfolioPage::connectSignalsAndSlots()
 
     connect(technologyService, &TechnologyService::techIconReceipt, this, &PortfolioPage::techIconReceipt);
     connect(technologyService, &TechnologyService::errorOcurred, this, &PortfolioPage::errorOcurred);
-
-    connect(entityTechService, &EntityTechService::errorOcurred, this, &PortfolioPage::errorOcurred);
-    connect(entityTechService, &EntityTechService::errorOcurred, this, &PortfolioPage::errorOcurred);
 
     connect(projectService, &ProjectService::projectCoverReceipt, this, &PortfolioPage::projectCoverReceipt);
     connect(projectService, &ProjectService::errorOcurred, this, &PortfolioPage::errorOcurred);
