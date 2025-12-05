@@ -61,14 +61,9 @@ void ProjectPage::on_pushButtonBack_clicked()
 
 void ProjectPage::on_pushButtonAddTechnology_clicked()
 {
-    disconnect(entityTechService, &EntityTechService::technologiesRelated, this, &ProjectPage::technologiesRelated);
-
     QString entityType = "project";
     TechnologyRelation dialog(factory, project.getId(), entityType, this);
     dialog.exec();
-
-    connect(entityTechService, &EntityTechService::technologiesRelated, this, &ProjectPage::technologiesRelated);
-    //connect and disconnect this way temporaly
 }
 
 void ProjectPage::on_pushButtonHandleGallery_clicked()
