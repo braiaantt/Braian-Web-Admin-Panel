@@ -59,7 +59,7 @@ void PortfolioPage::on_pushButtonAddTechnology_clicked()
 
 void PortfolioPage::on_pushButtonAddProject_clicked()
 {
-    CreateProject dialog(projectService, this);
+    CreateProject dialog(factory, this);
     if(dialog.exec() == QDialog::Rejected) return;
 
     QHBoxLayout *layout = (QHBoxLayout*)ui->scrollAreaProjectWidgetContents->layout();
