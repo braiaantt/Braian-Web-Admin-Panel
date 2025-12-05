@@ -3,8 +3,8 @@
 #include <QMessageBox>
 #include "utils.h"
 
-CreateProject::CreateProject(ProjectService *projectService, QWidget *parent)
-    : QDialog(parent), projectService(projectService)
+CreateProject::CreateProject(ServiceFactory *factory, QWidget *parent)
+    : QDialog(parent), factory(factory)
     , ui(new Ui::CreateProject)
 {
     ui->setupUi(this);
@@ -21,6 +21,7 @@ CreateProject::~CreateProject()
 void CreateProject::init()
 {
     setWindowTitle("Crear Proyecto");
+    projectService = factory->makeProjectService(this);
     connectSignalsAndSlots();
 }
 

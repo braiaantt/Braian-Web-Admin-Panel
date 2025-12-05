@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include "project.h"
+#include "servicefactory.h"
 #include "projectservice.h"
 
 namespace Ui {
@@ -14,7 +15,7 @@ class CreateProject : public QDialog
     Q_OBJECT
 
 public:
-    explicit CreateProject(ProjectService *projectService, QWidget *parent = nullptr);
+    explicit CreateProject(ServiceFactory *factory, QWidget *parent = nullptr);
     ~CreateProject();
 
     //------ Getters ------
@@ -31,6 +32,7 @@ private slots:
 
 private:
     Ui::CreateProject *ui;
+    ServiceFactory *factory;
     ProjectService *projectService;
     Project project;
 
