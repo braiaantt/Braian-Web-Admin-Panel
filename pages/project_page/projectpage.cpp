@@ -64,7 +64,7 @@ void ProjectPage::on_pushButtonAddTechnology_clicked()
     disconnect(entityTechService, &EntityTechService::technologiesRelated, this, &ProjectPage::technologiesRelated);
 
     QString entityType = "project";
-    TechnologyRelation dialog(technologyService, entityTechService, project.getId(), entityType, this);
+    TechnologyRelation dialog(factory, project.getId(), entityType, this);
     dialog.exec();
 
     connect(entityTechService, &EntityTechService::technologiesRelated, this, &ProjectPage::technologiesRelated);
@@ -73,7 +73,6 @@ void ProjectPage::on_pushButtonAddTechnology_clicked()
 
 void ProjectPage::on_pushButtonHandleGallery_clicked()
 {
-    QString entityType = "project";
     HandleImages dialog(factory, project.getId(), this);
     dialog.exec();;
 }

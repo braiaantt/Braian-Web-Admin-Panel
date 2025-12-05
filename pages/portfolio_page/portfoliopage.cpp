@@ -52,7 +52,7 @@ void PortfolioPage::on_pushButtonAddTechnology_clicked()
 {
     int entityId = 1;
     QString entityType = "portfolio";
-    TechnologyRelation dialog(technologyService, entityTechService, entityId, entityType, this);
+    TechnologyRelation dialog(factory, entityId, entityType, this);
     connect(&dialog, &TechnologyRelation::technologiesChanged, this, &PortfolioPage::refreshTechnologies);
     dialog.exec();
 }
