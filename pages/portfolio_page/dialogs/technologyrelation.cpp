@@ -3,9 +3,8 @@
 #include "utils.h"
 #include "technologywidget.h"
 
-TechnologyRelation::TechnologyRelation(TechnologyService *technologyService, EntityTechService *entityTechService,
-                                       int entityId, const QString &entityType, QWidget *parent)
-    : QDialog(parent), technologyService(technologyService), entityTechService(entityTechService), entityId(entityId), entityType(entityType)
+TechnologyRelation::TechnologyRelation(ServiceFactory *factory,int entityId, const QString &entityType, QWidget *parent)
+    : QDialog(parent), factory(factory), entityId(entityId), entityType(entityType)
     , ui(new Ui::TechnologyRelation)
 {
     ui->setupUi(this);
@@ -21,6 +20,9 @@ TechnologyRelation::~TechnologyRelation()
 
 void TechnologyRelation::init()
 {
+    technologyService = factory->makeTechnologyService(this);
+    entityTechService = factory->makeEntityTechService(this);
+
     ui->scrollAreaTechnologies->init();
     connectSignalsAndSlots();
     technologyService->getTechnologies();

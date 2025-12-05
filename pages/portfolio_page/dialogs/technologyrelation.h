@@ -2,6 +2,7 @@
 #define TECHNOLOGYRELATION_H
 
 #include <QDialog>
+#include "servicefactory.h"
 #include "technologyservice.h"
 #include "entitytechservice.h"
 
@@ -14,8 +15,7 @@ class TechnologyRelation : public QDialog
     Q_OBJECT
 
 public:
-    explicit TechnologyRelation(TechnologyService *technologyService, EntityTechService *entityTechService,
-                                int entityId, const QString &entityType, QWidget *parent = nullptr);
+    explicit TechnologyRelation(ServiceFactory *factory, int entityId, const QString &entityType, QWidget *parent = nullptr);
     ~TechnologyRelation();
 
 private slots:
@@ -33,6 +33,7 @@ signals:
 
 private:
     Ui::TechnologyRelation *ui;
+    ServiceFactory *factory;
     TechnologyService *technologyService;
     EntityTechService *entityTechService;
     int entityId;
