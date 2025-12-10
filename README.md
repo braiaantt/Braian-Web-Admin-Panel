@@ -32,7 +32,7 @@ Además:
 ---
 
 ## 🚀 Implementaciones futuras
-Estas son mejoras planificadas para continuar ampliando el panel:
+Estas son mejoras planificadas para continuar ampliando el panel, que aunque visualmente lo soporta, todavia falta implementación de lógica para las siguientes acciones:
 
 - **Renovar token automáticamente:**  
   Implementar el flujo completo de refresco automático del refresh token sin intervención del usuario.
@@ -43,3 +43,4 @@ Estas son mejoras planificadas para continuar ampliando el panel:
 - **Operaciones PUT por proyecto:**  
   Implementar actualización de proyectos existentes (nombre, descripciones, imágenes, tecnologías asociadas).
 
+Estas caracteristicas aún no fueron implementadas para acelerar el proceso de despliegue de la página.
